@@ -44,7 +44,8 @@ public class VFS2 {
             } catch ( Exception ignored ) {
                 // Exceptions can be thrown due to a closed classloader
             }
-        }));
+        })
+        );
     }
 
     public static VFS2 getInstance() {

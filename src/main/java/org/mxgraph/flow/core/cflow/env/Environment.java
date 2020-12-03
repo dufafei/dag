@@ -3,7 +3,6 @@ package org.mxgraph.flow.core.cflow.env;
 import com.google.common.util.concurrent.SettableFuture;
 import org.mxgraph.flow.core.cflow.plugin.PluginRegistry;
 import org.mxgraph.flow.core.cflow.plugin.PluginTypeInterface;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
@@ -19,7 +18,7 @@ public class Environment {
         pluginTypes.add(pluginTypeInterface);
     }
 
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings("unchecked")
     public static void init() throws Exception {
         SettableFuture ready;
         if (initialized.compareAndSet(null, ready = SettableFuture.create())) {

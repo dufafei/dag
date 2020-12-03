@@ -8,35 +8,20 @@ import org.apache.commons.vfs2.FileSelector;
 public class PluginFolder implements PluginFolderInterface {
 
     private String folder;
-    private boolean pluginXmlFolder;
-    private boolean pluginAnnotationsFolder;
     private boolean searchLibDir;
 
-    public PluginFolder(String folder, boolean pluginXmlFolder, boolean pluginAnnotationsFolder,
-                         boolean searchLibDir) {
+    public PluginFolder(String folder, boolean searchLibDir) {
         this.folder = folder;
-        this.pluginXmlFolder = pluginXmlFolder;
-        this.pluginAnnotationsFolder = pluginAnnotationsFolder;
         this.searchLibDir = searchLibDir;
     }
 
-    public PluginFolder( String folder, boolean pluginXmlFolder, boolean pluginAnnotationsFolder ) {
-        this(folder, pluginXmlFolder, pluginAnnotationsFolder, false);
+    public PluginFolder(String folder) {
+        this(folder, false);
     }
 
     @Override
     public String getFolder() {
         return folder;
-    }
-
-    @Override
-    public boolean isPluginXmlFolder() {
-        return pluginXmlFolder;
-    }
-
-    @Override
-    public boolean isPluginAnnotationsFolder() {
-        return pluginAnnotationsFolder;
     }
 
     @Override

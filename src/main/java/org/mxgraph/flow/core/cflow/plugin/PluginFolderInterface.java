@@ -6,9 +6,5 @@ public interface PluginFolderInterface {
 
     public String getFolder();
 
-    public boolean isPluginXmlFolder();
-
-    public boolean isPluginAnnotationsFolder();
-
     public FileObject[] findJarFiles() throws Exception;
 }

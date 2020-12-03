@@ -17,5 +17,4 @@ public class XMLParserFactoryProducer {
         docBuilderFactory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
         return docBuilderFactory;
     }
-
 }
