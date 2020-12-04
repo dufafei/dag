@@ -15,37 +15,41 @@ import java.util.jar.JarFile;
  */
 public class PluginScanner {
 
-    public <A extends Annotation> List<Class<?>> getAnnotationClasses(String packageName,
-                                                                      Class<A> annotationClass) throws Exception {
+    List<Class<?>> classes = new ArrayList<>();
+
+    public List<Class<?>> getClasses() {
+        return classes;
+    }
+
+    /**
+     * 采用ClassLoader扫描
+     */
+    public <A extends Annotation> void scanArchives(String packageName, Class<A> annotationClass) throws Exception {
         packageName = packageName.replace('.', '/');
-        List<Class<?>> classes = new ArrayList<>();
-        Enumeration<URL> urls = Thread.currentThread().getContextClassLoader().getResources(packageName);
-        while (urls.hasMoreElements()) {
-            URL url = urls.nextElement();
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        URL url = classLoader.getResource(packageName);
+        if(url != null) {
             // 得到协议的名称
             String protocol = url.getProtocol();
-            System.out.println(protocol);
             if ("file".equals(protocol)) {
                 // 获取包的物理路径
                 String filePath = URLDecoder.decode(url.getFile(), "UTF-8");
                 // 以文件的方式扫描整个包下的文件 并添加到集合中
-                addClass(classes, filePath, packageName, annotationClass);
+                addClass(filePath, packageName, annotationClass);
             }
             if ("jar".equals(protocol)) {
                 // 获取jar
                 JarFile jar = ((JarURLConnection) url.openConnection()).getJarFile();
                 Enumeration<JarEntry> entries = jar.entries();
-                addClass(classes, entries, packageName, annotationClass);
+                addClass(entries, packageName, annotationClass);
             }
         }
-        return classes;
     }
 
     /**
      * 遍历一个目录下
      */
-    private <A extends Annotation> void addClass(List<Class<?>> list,
-                                                 String filePath,
+    private <A extends Annotation> void addClass(String filePath,
                                                  String packageName,
                                                  Class<A> annotationClass) throws Exception {
         File[] files = new File(filePath).listFiles(File::isDirectory);
@@ -62,7 +66,7 @@ public class PluginScanner {
                                 packageName = packageName.replace("/", ".");
                                 className = packageName + "." + dirName + "." + className;
                             }
-                            doAddClass(list, className, annotationClass);
+                            doAddClass(className, annotationClass);
                         }
                     }
                 }
@@ -70,8 +74,7 @@ public class PluginScanner {
         }
     }
 
-    private <A extends Annotation> void addClass(List<Class<?>> list,
-                                                 Enumeration<JarEntry> entries,
+    private <A extends Annotation> void addClass(Enumeration<JarEntry> entries,
                                                  String packageName,
                                                  Class<A> annotationClass) throws Exception {
         while (entries.hasMoreElements()) {
@@ -92,19 +95,18 @@ public class PluginScanner {
                         // 去掉后面的".class" 获取真正的类名
                         String className = name.substring(0, name.length() - 6);
                         className = className.replace("/", ".");
-                        doAddClass(list, className, annotationClass);
+                        doAddClass(className, annotationClass);
                     }
                 }
             }
         }
     }
 
-    private <A extends Annotation> void doAddClass(List<Class<?>> list,
-                                                   final String className,
+    private <A extends Annotation> void doAddClass(final String className,
                                                    Class<A> annotationClass) throws Exception {
         Class<?> clazz = Class.forName(className);
-        if (clazz.getAnnotation(annotationClass) != null && list.indexOf(clazz) < 0) {
-            list.add(clazz);
+        if (clazz.getAnnotation(annotationClass) != null && classes.indexOf(clazz) < 0) {
+            classes.add(clazz);
         }
     }
 }

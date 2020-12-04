@@ -28,5 +28,5 @@ public interface PluginInterface {
 
     void addExtensionOption(String key, String value);
 
-    public boolean isNativePlugin();
+    boolean isNativePlugin();
 }

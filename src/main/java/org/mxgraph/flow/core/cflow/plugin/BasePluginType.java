@@ -19,7 +19,7 @@ import java.util.*;
  */
 public abstract class BasePluginType implements PluginTypeInterface {
 
-    Class<? extends java.lang.annotation.Annotation> pluginType;
+    protected Class<? extends java.lang.annotation.Annotation> pluginType;
     protected List<PluginFolderInterface> pluginFolders;
     protected boolean searchLibDir;
     protected PluginRegistry registry;
@@ -55,21 +55,21 @@ public abstract class BasePluginType implements PluginTypeInterface {
         if(pluginScan != null) {
             String packageName = pluginScan.basePackageName();
             PluginScanner pluginScanner = new PluginScanner();
-            List<Class<?>> classes = pluginScanner.getAnnotationClasses(packageName, pluginType);
+            pluginScanner.scanArchives(packageName, pluginType);
+            List<Class<?>> classes = pluginScanner.getClasses();
             for (Class<?> clazz: classes) {
                 Annotation annotation = clazz.getAnnotation(pluginType);
                 handlePluginAnnotation(clazz, null, annotation,
                         null, true, null);
             }
         } else {
-            throw new RuntimeException("缺少PluginScan注解");
+            throw new RuntimeException("missing a annonation: PluginScan");
         }
     }
 
     private void registerPluginJars() throws Exception {
         List<FileAnnotationPlugin> fileAnnotationPluginList = findAnnotatedClassFiles(pluginType.getName());
         for (FileAnnotationPlugin fileAnnotationPlugin: fileAnnotationPluginList) {
-
             URLClassLoader urlClassLoader = createUrlClassLoader(fileAnnotationPlugin.getJarFile());
             try {
                 Class<?> clazz = urlClassLoader.loadClass(fileAnnotationPlugin.getClassName());
@@ -155,8 +155,7 @@ public abstract class BasePluginType implements PluginTypeInterface {
                 urls.add(libFile.getURL());
             }
         }
-        return new URLClassLoader(urls.toArray(new URL[0]), Thread.currentThread().getContextClassLoader()
-        );
+        return new URLClassLoader(urls.toArray(new URL[0]), Thread.currentThread().getContextClassLoader());
     }
 
     @Override
@@ -181,8 +180,8 @@ public abstract class BasePluginType implements PluginTypeInterface {
     }
 
     protected void addExtraClasses(Annotation annotation, Map<String, String> extensionOptions) {
-        System.out.println(annotation);
-        System.out.println(extensionOptions);
+        /*System.out.println(annotation);
+        System.out.println(extensionOptions);*/
     }
 
     protected abstract String extractID(java.lang.annotation.Annotation annotation);
