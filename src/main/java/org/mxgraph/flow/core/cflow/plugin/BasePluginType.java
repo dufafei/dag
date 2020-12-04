@@ -19,17 +19,16 @@ import java.util.*;
  */
 public abstract class BasePluginType implements PluginTypeInterface {
 
+    protected PluginRegistry registry = PluginRegistry.getInstance();
     protected Class<? extends java.lang.annotation.Annotation> pluginType;
     protected List<PluginFolderInterface> pluginFolders;
     protected boolean searchLibDir;
-    protected PluginRegistry registry;
     protected String id;
     protected String name;
 
     private BasePluginType(Class<? extends Annotation> pluginType) {
         this.pluginType = pluginType;
         this.pluginFolders = new ArrayList<>();
-        this.registry = PluginRegistry.getInstance();
     }
 
     public BasePluginType(Class<? extends Annotation> pluginType, String id, String name) {
@@ -115,7 +114,8 @@ public abstract class BasePluginType implements PluginTypeInterface {
                 );
             } catch (Exception e) {
                 throw new Exception(
-                        "Unexpected error registering jar plugin file: " + fileAnnotationPlugin.getJarFile(), e);
+                        "Unexpected error registering jar plugin file: " + fileAnnotationPlugin.getJarFile(), e
+                );
             }
         }
     }
@@ -134,7 +134,9 @@ public abstract class BasePluginType implements PluginTypeInterface {
                             classFiles.add(
                                     new FileAnnotationPlugin(
                                             fileObject.getParent().getURL(),
-                                            fileObject.getURL(), fil)
+                                            fileObject.getURL(),
+                                            fil
+                                    )
                             );
                         }
                     }
