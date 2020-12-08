@@ -81,11 +81,6 @@ public abstract class AbstractMeta<T extends VertexMeta> {
         return disabled;
     }
 
-    public List<String> getDisabledVertexIds() {
-        List<T> disabled = getDisabledVertex();
-        return getVertexIds(disabled);
-    }
-
     public List<T> findPreviousVertex(T vertex, boolean all) {
         List<T> previous = new ArrayList<>();
         for(int i = 0; i < nrEdge(); ++i) {
@@ -112,21 +107,21 @@ public abstract class AbstractMeta<T extends VertexMeta> {
         return next;
     }
 
-    public List<T> getStartOrEndVertexes(Vertex status, boolean allowAlone, boolean all) {
+    public List<T> getStartOrEndVertexes(Vertex status, boolean allowAlone, boolean allowDisabled) {
         List<T> vertexes = new ArrayList<>();
         for(int i = 0; i < nrEdge(); ++i) {
             HopMeta<T> hopMeta = getEdge(i);
-            if(hopMeta.isEnabled() || all) {
+            if(hopMeta.isEnabled() || allowDisabled) {
                 if(status == Vertex.Start) {
                     T t = hopMeta.getFrom();
-                    if(findPreviousVertex(t, all).isEmpty()) {
+                    if(findPreviousVertex(t, allowDisabled).isEmpty()) {
                         int idx = vertexes.indexOf(t);
                         if (idx < 0) vertexes.add(t);
                     }
                 }
                 if(status == Vertex.End) {
                     T t = hopMeta.getTo();
-                    if(findNextVertex(t, all).isEmpty()) {
+                    if(findNextVertex(t, allowDisabled).isEmpty()) {
                         int idx = vertexes.indexOf(t);
                         if (idx < 0) vertexes.add(t);
                     }

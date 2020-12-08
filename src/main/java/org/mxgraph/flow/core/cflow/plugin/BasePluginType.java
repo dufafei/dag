@@ -46,7 +46,7 @@ public abstract class BasePluginType implements PluginTypeInterface {
      */
     public void searchPlugins() throws Exception {
         registerNatives(); // classpath搜索
-        registerPluginJars(); // jar搜索
+        registerPluginJars(); // 指定目录下的jar搜索
     }
 
     private void registerNatives() throws Exception {

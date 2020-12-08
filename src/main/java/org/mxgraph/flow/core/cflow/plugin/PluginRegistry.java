@@ -121,7 +121,7 @@ public class PluginRegistry {
                     if (mapList != null) {
                         for (PluginInterface p : mapList) {
                             T t = (T) p;
-                            set.add( t );
+                            set.add(t);
                         }
                     }
                 }
