@@ -174,8 +174,7 @@ public abstract class BasePluginType implements PluginTypeInterface {
         String icon = extractIcon(annotation);
         Map<String, String> extensionOptions = new HashMap<>();
         addExtraClasses(annotation, extensionOptions);
-        PluginInterface plugin = new Plugin(
-                this.getClass(), id, name, desc, category,
+        PluginInterface plugin = new Plugin(id, name, desc, category,
                 urlClassLoader, icon, clazz.getName(),
                 libraries, nativePlugin, extensionOptions);
         registry.registerPlugin(this.getClass(), plugin);

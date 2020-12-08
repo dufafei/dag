@@ -7,7 +7,6 @@ import java.util.Map;
 
 public class Plugin implements PluginInterface {
 
-    private Class<? extends PluginTypeInterface> pluginType;
     private String id;
     private String name;
     private String description;
@@ -19,11 +18,9 @@ public class Plugin implements PluginInterface {
     private boolean nativePlugin;
     private Map<String, String> extensionOptions = new HashMap<>();
 
-    public Plugin(Class<? extends PluginTypeInterface> pluginType,
-                  String id, String name, String description, String category,
+    public Plugin(String id, String name, String description, String category,
                   URLClassLoader urlClassLoader, String icon, String className, List<String> libraries,
                   boolean nativePlugin, Map<String, String> extensionOptions) {
-        this.pluginType = pluginType;
         this.id = id;
         this.name = name;
         this.description = description;
@@ -34,11 +31,6 @@ public class Plugin implements PluginInterface {
         this.libraries = libraries;
         this.nativePlugin = nativePlugin;
         this.extensionOptions = extensionOptions;
-    }
-
-    @Override
-    public Class<? extends PluginTypeInterface> getPluginType() {
-        return pluginType;
     }
 
     @Override

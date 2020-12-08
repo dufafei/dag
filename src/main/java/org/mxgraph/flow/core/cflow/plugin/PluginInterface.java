@@ -6,8 +6,6 @@ import java.util.Map;
 
 public interface PluginInterface {
 
-    Class<? extends PluginTypeInterface> getPluginType();
-
     String getId();
 
     String getName();
