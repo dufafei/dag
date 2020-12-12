@@ -2,13 +2,13 @@ package org.mxgraph.flow.core.edge;
 
 import org.mxgraph.flow.core.vertex.VertexMeta;
 
-public class HopMeta<T extends VertexMeta> {
+public class EdgeMeta<T extends VertexMeta> {
 
     private T from; // 起始点
     private T to; // 终止点
     private boolean enabled; // 是否启用
 
-    public HopMeta(){}
+    public EdgeMeta(){}
     public T getFrom() {
         return from;
     }

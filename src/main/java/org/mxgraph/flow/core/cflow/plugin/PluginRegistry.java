@@ -110,7 +110,7 @@ public class PluginRegistry {
         }
     }
 
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings("unchecked")
     public <T extends PluginInterface, K extends PluginTypeInterface> List<T> getPlugins(Class<K> type) {
         Set<T> set = new HashSet<>();
         lock.readLock().lock();
