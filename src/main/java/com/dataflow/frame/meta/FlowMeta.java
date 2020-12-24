@@ -25,28 +25,7 @@ public abstract class FlowMeta<T extends VertexMeta, U extends EdgeMeta<T>> {
     public T getVertex(int i) { return vertexes.get(i); }
     public U getEdge(int i) { return edges.get(i); }
 
-    /**
-     *
-     * @param containDisabledNode 是否包含禁用点
-     * @param containIsolatedNode 是否包含孤立点
-     * @return ids
-     */
-    public List<T> getVertexes(boolean containDisabledNode,
-                               boolean containIsolatedNode) {
-        List<T> vertexes = new ArrayList<>();
-        for(T vertex : vertexes) {
-            boolean conditionA = vertex.isEnabled() | containDisabledNode;
-            boolean conditionB = vertex.isConnected() | containIsolatedNode;
-            if (conditionA && conditionB) {
-                vertexes.add(vertex);
-            }
-        }
-        return vertexes;
-    }
-
-    public List<String> getVertexIds(boolean containDisabledNode,
-                                     boolean containIsolatedNode) {
-        List<T> vertexes = getVertexes(containDisabledNode, containIsolatedNode);
+    public List<String> getVertexIds(List<T> vertexes) {
         List<String> ids = new ArrayList<>();
         for(T vertex : vertexes) {
             ids.add(vertex.getNodeId());
@@ -54,9 +33,7 @@ public abstract class FlowMeta<T extends VertexMeta, U extends EdgeMeta<T>> {
         return ids;
     }
 
-    public List<String> getVertexNames(boolean containDisabledNode,
-                                       boolean containIsolatedNode) {
-        List<T> vertexes = getVertexes(containDisabledNode, containIsolatedNode);
+    public List<String> getVertexNames(List<T> vertexes) {
         List<String> names = new ArrayList<>();
         for(T vertex : vertexes) {
             names.add(vertex.getNodeName());
@@ -82,10 +59,10 @@ public abstract class FlowMeta<T extends VertexMeta, U extends EdgeMeta<T>> {
         return null;
     }
 
-    public List<T> findPreviousVertex(T vertex, boolean containDisabledNode) {
+    public List<T> findPreviousVertexes(T vertex, boolean all) {
         List<T> previous = new ArrayList<>();
         for(U edge: edges) {
-            if ((edge.isEnabled() | containDisabledNode) && edge.getEndNode().equals(vertex)) {
+            if ((edge.isEnabled() | all) && edge.getEndNode().equals(vertex)) {
                 T t = edge.getStartNode();
                 addVertex(previous, t);
             }
@@ -93,10 +70,10 @@ public abstract class FlowMeta<T extends VertexMeta, U extends EdgeMeta<T>> {
         return previous;
     }
 
-    public List<T> findNextVertex(T vertex, boolean containDisabledNode) {
+    public List<T> findNextVertexes(T vertex, boolean all) {
         List<T> next = new ArrayList<>();
         for(U edge: edges) {
-            if ((edge.isEnabled() | containDisabledNode) && edge.getStartNode().equals(vertex)) {
+            if ((edge.isEnabled() | all) && edge.getStartNode().equals(vertex)) {
                 T t = edge.getEndNode();
                 addVertex(next, t);
             }
@@ -104,35 +81,45 @@ public abstract class FlowMeta<T extends VertexMeta, U extends EdgeMeta<T>> {
         return next;
     }
 
-    public List<T> getFlowStartVertexes(boolean containDisabledNode,
-                                        boolean containIsolateNode) {
+    public List<T> findStartVertexes(boolean all) {
         List<T> vertexes = new ArrayList<>();
         for(U edge: edges) {
             T t = edge.getStartNode();
-            if(findPreviousVertex(t, containDisabledNode).isEmpty()) {
+            if(findPreviousVertexes(t, all).isEmpty()) {
                 addVertex(vertexes, t);
             }
-        }
-        List<T> nodes = getVertexes(containDisabledNode, containIsolateNode);
-        for (T node: nodes) {
-            addVertex(vertexes, node);
         }
         return vertexes;
     }
 
-    public List<T> getFlowEndVertexes(boolean containDisabledNode,
-                                      boolean containIsolateNode) {
+    public List<T> findEndVertexes(boolean all) {
         List<T> vertexes = new ArrayList<>();
         for(U edge: edges) {
             T t = edge.getStartNode();
-            if(findNextVertex(t, containDisabledNode).isEmpty()) {
+            if(findNextVertexes(t, all).isEmpty()) {
                 addVertex(vertexes, t);
             }
         }
-        List<T> nodes = getVertexes(containDisabledNode, containIsolateNode);
-        for (T node: nodes) {
-            addVertex(vertexes, node);
-        }
         return vertexes;
+    }
+
+    public List<T> findDisabledVertexes() {
+        List<T> all = new ArrayList<>();
+        for(T vertex: vertexes) {
+            if(!vertex.isEnabled()) {
+                addVertex(all, vertex);
+            }
+        }
+        return all;
+    }
+
+    public List<T> findIsolatedVertexes() {
+        List<T> all = new ArrayList<>();
+        for(T vertex: vertexes) {
+            if(!vertex.isConnected()) {
+                addVertex(all, vertex);
+            }
+        }
+        return all;
     }
 }

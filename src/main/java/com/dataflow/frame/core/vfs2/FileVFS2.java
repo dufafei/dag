@@ -9,20 +9,6 @@ import org.apache.commons.vfs2.impl.DefaultFileSystemManager;
 import org.apache.commons.vfs2.impl.StandardFileSystemManager;
 import java.io.File;
 
-/**
- * VFS把对各种各样的的文件系统的访问封装成统一的应用程序接口
- * FTP
- * Local Files
- * HTTP and HTTPS
- * SFTP
- * Temporary Files
- * Zip, Jar and Tar (uncompressed, tgz or tbz2)
- * gzip and bzip2
- * res
- * ram
- * 这些文件系统中的文件被封装成了FileObject这个类，文件的读写操作通过此类来操作。
- * 文件的路径采用了URL的方式。
- */
 public class FileVFS2 {
 
     private static final FileVFS2 FILE_VFS_2 = new FileVFS2();

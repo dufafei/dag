@@ -6,7 +6,6 @@ import java.util.regex.Pattern;
 public class Const {
 
 
-
     /**
      * 操作系统上的文件系统文件分隔符
      */

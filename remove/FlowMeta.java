@@ -139,4 +139,43 @@ public abstract class FlowMeta<T extends VertexMeta, U extends EdgeMeta<T>> {
         }
         return vertexes;
     }
+
+    /**
+     *
+     * @param containDisabledNode 是否包含禁用点
+     * @param containIsolatedNode 是否包含孤立点
+     * @return ids
+     */
+    public List<T> getVertexes(boolean containDisabledNode,
+                               boolean containIsolatedNode) {
+        List<T> all = new ArrayList<>();
+        for(T vertex : vertexes) {
+            boolean conditionA = vertex.isEnabled() | containDisabledNode;
+            boolean conditionB = vertex.isConnected() | containIsolatedNode;
+            if (conditionA && conditionB) {
+                all.add(vertex);
+            }
+        }
+        return all;
+    }
+
+    public List<String> getVertexIds(boolean containDisabledNode,
+                                     boolean containIsolatedNode) {
+        List<T> vertexes = getVertexes(containDisabledNode, containIsolatedNode);
+        List<String> ids = new ArrayList<>();
+        for(T vertex : vertexes) {
+            ids.add(vertex.getNodeId());
+        }
+        return ids;
+    }
+
+    public List<String> getVertexNames(boolean containDisabledNode,
+                                       boolean containIsolatedNode) {
+        List<T> vertexes = getVertexes(containDisabledNode, containIsolatedNode);
+        List<String> names = new ArrayList<>();
+        for(T vertex : vertexes) {
+            names.add(vertex.getNodeName());
+        }
+        return names;
+    }
 }
