@@ -95,7 +95,7 @@ public abstract class GraphMeta<T extends VertexMeta, U extends EdgeMeta<T>> {
     public List<T> getIsolateVertexes() {
         List<T> isolated = new ArrayList<>();
         for(T vertex : vertexes) {
-            if(vertex.isIsolated()) {
+            if(!vertex.isConnected()) {
                 isolated.add(vertex);
             }
         }
