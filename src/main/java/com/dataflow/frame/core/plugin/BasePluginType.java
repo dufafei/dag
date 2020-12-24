@@ -115,15 +115,15 @@ public abstract class BasePluginType implements PluginTypeInterface {
         PluginRegistry.getInstance().registerPlugin(getClass(), plugin);
     }
 
-    protected abstract void addExtraMessages(Annotation annotation, Map<String, String> extensionOptions);
-
     protected abstract String extractID(java.lang.annotation.Annotation annotation);
 
     protected abstract String extractName(java.lang.annotation.Annotation annotation);
 
     protected abstract String extractDesc(java.lang.annotation.Annotation annotation);
 
+    protected abstract String extractIcon(java.lang.annotation.Annotation annotation);
+
     protected abstract String extractCategory(java.lang.annotation.Annotation annotation);
 
-    protected abstract String extractIcon(java.lang.annotation.Annotation annotation);
+    protected abstract void addExtraMessages(Annotation annotation, Map<String, String> extensionOptions);
 }
