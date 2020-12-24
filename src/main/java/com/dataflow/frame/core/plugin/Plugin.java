@@ -14,11 +14,11 @@ public class Plugin implements PluginInterface {
     private String className;
     private List<String> libraries;
     private URLClassLoader urlClassLoader;
-    private Map<String, String> extensionOptions;
+    private Map<String, Object> extensionOptions;
 
     public Plugin(String id, String name, String description,String icon, String category,
                   String className, List<String> libraries, URLClassLoader urlClassLoader,
-                  Map<String, String> extensionOptions) {
+                  Map<String, Object> extensionOptions) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -63,12 +63,12 @@ public class Plugin implements PluginInterface {
     public URLClassLoader getUrlClassLoader() { return urlClassLoader; }
 
     @Override
-    public Map<String, String> getExtensionOptions() {
+    public Map<String, Object> getExtensionOptions() {
         return extensionOptions;
     }
 
     @Override
-    public void addExtensionOption(String key, String value) {
+    public void addExtensionOption(String key, Object value) {
         extensionOptions.put(key, value);
     }
 }

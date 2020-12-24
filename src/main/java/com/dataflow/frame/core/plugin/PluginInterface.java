@@ -61,11 +61,11 @@ public interface PluginInterface {
      *
      * @return 插件扩展信息
      */
-    Map<String, String> getExtensionOptions();
+    Map<String, Object> getExtensionOptions();
 
     /**
      *
      * 添加插件扩展信息
      */
-    void addExtensionOption(String key, String value);
+    void addExtensionOption(String key, Object value);
 }

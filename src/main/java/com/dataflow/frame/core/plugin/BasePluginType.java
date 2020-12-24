@@ -35,15 +35,12 @@ public abstract class BasePluginType implements PluginTypeInterface {
             FileObject[] fileObjectList = pluginFolder.findJarFiles(false);
             if(fileObjectList != null) {
                 for (FileObject fileObject: fileObjectList) {
-
                     List<FileObject> fileObjects = getFileObjects(fileObject);
                     List<URL> urls = getFileUrls(fileObjects);
                     List<String> libraries = getFileNames(fileObjects);
-
                     AnnotationDB annotationDB = new AnnotationDB();
                     annotationDB.scanArchives(fileObject.getURL());
                     Set<String> impls = annotationDB.getAnnotationIndex().get(pluginType.getName());
-
                     for (String imp: impls) {
                         try {
                             ClassLoader classLoader = getClass().getClassLoader();
@@ -99,13 +96,10 @@ public abstract class BasePluginType implements PluginTypeInterface {
         String id = extractID(annotation);
         String name = extractName(annotation);
         String desc = extractDesc(annotation);
-
         String icon = extractIcon(annotation);
         String category = extractCategory(annotation);
-
-        Map<String, String> extensionOptions = new HashMap<>();
+        Map<String, Object> extensionOptions = new HashMap<>();
         addExtraMessages(annotation, extensionOptions);
-
         PluginInterface plugin = new Plugin(
                 id, name, desc,
                 icon, category,
@@ -125,5 +119,5 @@ public abstract class BasePluginType implements PluginTypeInterface {
 
     protected abstract String extractCategory(java.lang.annotation.Annotation annotation);
 
-    protected abstract void addExtraMessages(Annotation annotation, Map<String, String> extensionOptions);
+    protected abstract void addExtraMessages(Annotation annotation, Map<String, Object> extensionOptions);
 }
