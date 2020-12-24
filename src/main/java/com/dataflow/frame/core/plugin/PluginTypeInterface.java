@@ -1,9 +1,6 @@
 package com.dataflow.frame.core.plugin;
 
-import com.dataflow.frame.core.plugin.folder.PluginFolderInterface;
-
 import java.lang.annotation.Annotation;
-import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.List;
 
@@ -41,9 +38,7 @@ public interface PluginTypeInterface {
      * 处理此类型下的注解插件
      */
     void handlePluginAnnotation(Class<?> clazz,
-                                URLClassLoader urlClassLoader,
-                                java.lang.annotation.Annotation annotation,
+                                Annotation annotation,
                                 List<String> libraries,
-                                boolean nativePlugin,
-                                URL pluginFolder) throws Exception;
+                                URLClassLoader classLoader) throws Exception;
 }

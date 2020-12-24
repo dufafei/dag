@@ -1,6 +1,6 @@
 package com.dataflow.frame.resolver.mxgraph.coder;
 
-import com.dataflow.frame.core.meta.FlowMeta;
+import com.dataflow.frame.meta.FlowMeta;
 import com.dataflow.frame.resolver.xml.coder.XmlCoder;
 import com.mxgraph.io.mxCodec;
 import com.mxgraph.util.mxUtils;
@@ -13,7 +13,7 @@ import org.w3c.dom.Node;
 /**
  * 基于前端mxGraph解析(xml格式)
  */
-public abstract class AbstractXmlCoder implements XmlCoder {
+public abstract class MxGraphCoder implements XmlCoder {
 
     @Override
     public FlowMeta decode(String xml) throws Exception {

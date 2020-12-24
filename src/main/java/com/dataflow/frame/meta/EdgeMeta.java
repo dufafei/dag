@@ -1,4 +1,4 @@
-package com.dataflow.frame.core.meta;
+package com.dataflow.frame.meta;
 
 /**
  * 边的属性

@@ -7,10 +7,14 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class VariableSpace implements Variable {
 
-    private Map<String, String> properties; // 存储变量
-    private Variable parent; // 父变量
-    private Map<String, String> injection; // 注入的变量
-    private boolean initialized; // 是否注入
+    // 存储变量
+    private Map<String, String> properties;
+    // 父变量
+    private Variable parent;
+    // 注入的变量
+    private Map<String, String> injection;
+    // 是否注入
+    private boolean initialized;
 
     public VariableSpace() {
         properties = new ConcurrentHashMap<>();
@@ -20,7 +24,7 @@ public class VariableSpace implements Variable {
     }
 
     @Override
-    public void initializeVariablesFrom(Variable parent) { }
+    public void initializeVariablesFrom(Variable parent) {}
 
     @Override
     public void copyVariablesFrom(Variable space) {

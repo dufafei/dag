@@ -1,30 +1,21 @@
-package com.dataflow.frame.core.plugin.registry;
+package com.dataflow.frame.core.plugin;
 
 import com.dataflow.frame.consts.Const;
-import com.dataflow.frame.core.plugin.PluginInterface;
-import com.dataflow.frame.core.plugin.PluginTypeInterface;
 import org.apache.commons.lang3.StringUtils;
 import java.net.URLClassLoader;
 import java.util.*;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-/**
- * 插件注册类。
- * 保存所有注册了的插件信息。
- */
 public class PluginRegistry {
 
+    // 插件类型
+    private static List<PluginTypeInterface> pluginTypes = new ArrayList<>();
+    // 插件类型-> 该类型的插件列表
+    private Map<Class<? extends PluginTypeInterface>, List<PluginInterface>> pluginMap = new HashMap<>();
+    private ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
+
     private static final PluginRegistry pluginRegistry = new PluginRegistry();
-    // 插件类型的列表
-    private static final List<PluginTypeInterface> pluginTypes = new ArrayList<>();
-    // 插件类型-> 该类型插件列表
-    private final Map<Class<? extends PluginTypeInterface>, List<PluginInterface>> pluginMap = new HashMap<>();
-    // 插件类型-> 该类型插件的类目
-    private final Map<Class<? extends PluginTypeInterface>, List<String>> categoryMap = new HashMap<>();
-    private final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
-
     private PluginRegistry() {};
-
     public static PluginRegistry getInstance() {
         return pluginRegistry;
     }
@@ -32,8 +23,7 @@ public class PluginRegistry {
     public static synchronized void addPluginType(PluginTypeInterface type) {
         pluginTypes.add(type);
     }
-
-    public List<PluginTypeInterface> getPluginTypes() {
+    public List<PluginTypeInterface> getPluginType() {
         lock.readLock().lock();
         try {
             return pluginTypes;
@@ -42,17 +32,9 @@ public class PluginRegistry {
         }
     }
 
-    /**
-     * 注册插件类型并加载它们各自的插件
-     */
     public static synchronized void init() throws Exception {
-        init(false);
-    }
-
-    public static synchronized void init(boolean keepCache) throws Exception {
-        final PluginRegistry registry = getInstance();
         for (final PluginTypeInterface pluginType : pluginTypes) {
-            registry.registerType(pluginType);
+            getInstance().registerType(pluginType);
         }
     }
 
@@ -61,48 +43,33 @@ public class PluginRegistry {
         pluginType.searchPlugins();
     }
 
-    /**
-     * 加锁
-     */
     private void registerType(Class<? extends PluginTypeInterface> pluginType) {
         lock.writeLock().lock();
         try {
             pluginMap.computeIfAbsent(pluginType, k -> new ArrayList<>());
-            categoryMap.computeIfAbsent(pluginType, k -> new ArrayList<>());
         } finally {
             lock.writeLock().unlock();
         }
     }
 
-    /**
-     * 注册插件
-     */
     public void registerPlugin(Class<? extends PluginTypeInterface> pluginType, PluginInterface plugin) throws Exception {
         lock.writeLock().lock();
         try {
             if(plugin.getId() == null) {
                 throw new Exception("Not a valid id specified in plugin :" + plugin);
             }
-            List<PluginInterface> list = pluginMap.computeIfAbsent(pluginType, k -> new ArrayList<>());
-            int index = list.indexOf(plugin);
-            if (index < 0) {
-                // 添加插件
-                list.add(plugin);
-            } else {
-                list.set(index, plugin);
-            }
-            // 对插件列表按照名称排序
-            list.sort((p1, p2) -> p1.getName().compareToIgnoreCase(p2.getName()));
-            if (StringUtils.isNotBlank(plugin.getCategory())) {
-                // 对插件的类目进行排序
-                List<String> categories = categoryMap.computeIfAbsent(pluginType, k -> new ArrayList<>());
-                if (!categories.contains(plugin.getCategory())) {
-                    // 添加类目
-                    categories.add(plugin.getCategory());
-                    // 对类目列表排序
-                    Collections.sort(categories);
-                }
-            }
+            List<PluginInterface> list = pluginMap.get(pluginType);
+            list.add(plugin);
+        } finally {
+            lock.writeLock().unlock();
+        }
+    }
+
+    public void unRegisterPlugin(Class<? extends PluginTypeInterface> pluginType, PluginInterface plugin) {
+        lock.writeLock().lock();
+        try {
+            List<PluginInterface> list = pluginMap.get(pluginType);
+            list.remove(plugin);
         } finally {
             lock.writeLock().unlock();
         }
@@ -142,16 +109,15 @@ public class PluginRegistry {
         return null;
     }
 
+    /**
+     * classpath 下使用Class.forName
+     * jar包下使用 urlClassLoader.loadClass
+     */
     @SuppressWarnings("unchecked")
     public <T> T loadClass(PluginInterface plugin) throws Exception {
         String className = plugin.getClassName();
-        Class<? extends T> cl;
-        if (plugin.isNativePlugin()) {
-            cl = (Class<? extends T>) Class.forName(className) ;
-        } else {
-            URLClassLoader ucl = plugin.getUrlClassLoader();
-            cl = (Class<? extends T>) ucl.loadClass(className);
-        }
+        URLClassLoader ucl = plugin.getUrlClassLoader();
+        Class<? extends T> cl = (Class<? extends T>) ucl.loadClass(className);
         return cl.newInstance();
     }
 }

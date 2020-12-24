@@ -1,6 +1,6 @@
 package com.dataflow.frame.resolver.mxgraph.coder;
 
-import com.dataflow.frame.core.meta.EdgeMeta;
+import com.dataflow.frame.meta.EdgeMeta;
 import com.mxgraph.model.mxCell;
 import org.w3c.dom.Element;
 

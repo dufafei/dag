@@ -1,4 +1,4 @@
-package com.dataflow.frame.core.plugin.folder;
+package com.dataflow.frame.core.plugin;
 
 import com.dataflow.frame.core.vfs2.FileVFS2;
 import org.apache.commons.vfs2.FileObject;

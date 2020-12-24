@@ -1,6 +1,6 @@
 package com.dataflow.frame.resolver.xml.coder;
 
-import com.dataflow.frame.core.meta.FlowMeta;
+import com.dataflow.frame.meta.FlowMeta;
 
 public interface XmlCoder {
 
