@@ -4,7 +4,7 @@ package com.dataflow.frame.meta;
  * 点的属性
  * @param <T>
  */
-public abstract class VertexMeta<T extends FlowMeta> {
+public abstract class VertexMeta<T extends GraphMeta> {
 
     private String nodeId; // 节点唯一标识
     private String nodeName; // 节点名称

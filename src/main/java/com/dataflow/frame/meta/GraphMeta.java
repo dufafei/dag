@@ -3,7 +3,7 @@ package com.dataflow.frame.meta;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class FlowMeta<T extends VertexMeta, U extends EdgeMeta<T>> {
+public abstract class GraphMeta<T extends VertexMeta, U extends EdgeMeta<T>> {
 
     private List<T> vertexes = new ArrayList<>();
     private List<U> edges = new ArrayList<>();
