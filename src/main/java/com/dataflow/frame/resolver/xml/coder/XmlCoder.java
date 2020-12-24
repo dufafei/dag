@@ -1,16 +1,16 @@
 package com.dataflow.frame.resolver.xml.coder;
 
-import com.dataflow.frame.meta.GraphMeta;
+import com.dataflow.frame.meta.FlowMeta;
 
 public interface XmlCoder {
 
     /**
      * 将xml转为meta
      */
-    GraphMeta decode(String xml) throws Exception;
+    FlowMeta decode(String xml) throws Exception;
 
     /**
      * 将meta转为xml
      */
-    String encode(GraphMeta meta) throws Exception;
+    String encode(FlowMeta meta) throws Exception;
 }

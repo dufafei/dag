@@ -1,6 +1,6 @@
 package com.dataflow.frame.resolver.mxgraph.coder;
 
-import com.dataflow.frame.meta.GraphMeta;
+import com.dataflow.frame.meta.FlowMeta;
 import com.dataflow.frame.resolver.xml.coder.XmlCoder;
 import com.mxgraph.io.mxCodec;
 import com.mxgraph.util.mxUtils;
@@ -16,7 +16,7 @@ import org.w3c.dom.Node;
 public abstract class MxGraphCoder implements XmlCoder {
 
     @Override
-    public GraphMeta decode(String xml) throws Exception {
+    public FlowMeta decode(String xml) throws Exception {
         mxGraph graph = new mxGraph();
         mxCodec code = new mxCodec();
         Document doc = mxXmlUtils.parseXml(xml);
@@ -25,10 +25,10 @@ public abstract class MxGraphCoder implements XmlCoder {
         return decode(graph);
     }
 
-    public abstract GraphMeta decode(mxGraph graph) throws Exception;
+    public abstract FlowMeta decode(mxGraph graph) throws Exception;
 
     @Override
-    public String encode(GraphMeta meta) throws Exception {
+    public String encode(FlowMeta meta) throws Exception {
         mxGraph graph = new mxGraph();
         graph.getModel().beginUpdate();
         try {
@@ -41,5 +41,5 @@ public abstract class MxGraphCoder implements XmlCoder {
         return mxUtils.getPrettyXml(node);
     }
 
-    public abstract void encode(GraphMeta meta, mxGraph graph) throws Exception;
+    public abstract void encode(FlowMeta meta, mxGraph graph) throws Exception;
 }

@@ -8,7 +8,7 @@ public abstract class EdgeMeta<T extends VertexMeta> {
 
     private T startNode; // 起始点
     private T endNode; // 终止点
-    private boolean enabled; // 启用/禁用
+    private boolean enabled; // 是否启用
 
     public T getStartNode() { return startNode; }
     public void setStartNode(T startNode) { this.startNode = startNode; }

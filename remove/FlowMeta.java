@@ -3,7 +3,7 @@ package com.dataflow.frame.meta;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class GraphMeta<T extends VertexMeta, U extends EdgeMeta<T>> {
+public abstract class FlowMeta<T extends VertexMeta, U extends EdgeMeta<T>> {
 
     private List<T> vertexes = new ArrayList<>();
     private List<U> edges = new ArrayList<>();
@@ -11,7 +11,6 @@ public abstract class GraphMeta<T extends VertexMeta, U extends EdgeMeta<T>> {
     public void addVertex(T t) { vertexes.add(t); }
 
     public void addVertex(List<T> vertexes, T t) {
-        // 避免重复添加
         int idx = vertexes.indexOf(t);
         if(idx < 0) vertexes.add(t);
     }
@@ -19,33 +18,40 @@ public abstract class GraphMeta<T extends VertexMeta, U extends EdgeMeta<T>> {
     public void addEdge(U u) { edges.add(u); }
 
     public void addEdge(List<U> edges, U u) {
-        // 避免重复添加
         int idx = edges.indexOf(u);
         if(idx < 0) edges.add(u);
     }
 
+    public int nrVertex() { return vertexes.size(); }
+    public int nrEdge() { return edges.size(); }
     public T getVertex(int i) { return vertexes.get(i); }
-
     public U getEdge(int i) { return edges.get(i); }
 
-    public int nrVertex() { return vertexes.size(); }
-
-    public int nrEdge() { return edges.size(); }
-
-    public List<String> getVertexIds() {
+    /**
+     *
+     * @param containDisabledNode 是否包含禁用点
+     * @param containIsolatedNode 是否包含孤立点
+     * @return ids
+     */
+    public List<String> getVertexIds(boolean containDisabledNode,
+                                     boolean containIsolatedNode) {
         List<String> ids = new ArrayList<>();
         for(T vertex : vertexes) {
-            ids.add(vertex.getNodeId());
+            boolean enabled = vertex.isEnabled() | containDisabledNode;
+            boolean connected = vertex.isConnected() | containIsolatedNode;
+            if (enabled && connected) {
+                ids.add(vertex.getNodeId());
+            }
         }
         return ids;
     }
 
-    public List<String> getVertexIds(List<T> vertexes) {
-        List<String> ids = new ArrayList<>();
-        for (T vertex : vertexes) {
-            ids.add(vertex.getNodeId());
+    public List<String> getVertexNames() {
+        List<String> names = new ArrayList<>();
+        for(T vertex : vertexes) {
+            names.add(vertex.getNodeName());
         }
-        return ids;
+        return names;
     }
 
     public T findVertexByID(String id) {
@@ -57,22 +63,6 @@ public abstract class GraphMeta<T extends VertexMeta, U extends EdgeMeta<T>> {
         return null;
     }
 
-    public List<String> getVertexNames() {
-        List<String> names = new ArrayList<>();
-        for(T vertex : vertexes) {
-            names.add(vertex.getNodeName());
-        }
-        return names;
-    }
-
-    public List<String> getVertexNames(List<T> vertexes) {
-        List<String> names = new ArrayList<>();
-        for (T vertex : vertexes) {
-            names.add(vertex.getNodeName());
-        }
-        return names;
-    }
-
     public T findVertexByName(String name) {
         for (T vertex : vertexes) {
             if(vertex.getNodeName().equals(name)){
@@ -82,20 +72,10 @@ public abstract class GraphMeta<T extends VertexMeta, U extends EdgeMeta<T>> {
         return null;
     }
 
-    public List<T> getDisabledVertexes() {
-        List<T> disabled = new ArrayList<>();
-        for (T vertex : vertexes) {
-            if(!vertex.isEnabled()) {
-                disabled.add(vertex);
-            }
-        }
-        return disabled;
-    }
-
-    public List<T> getIsolateVertexes() {
+    public List<T> getIsolateVertexes(boolean all) {
         List<T> isolated = new ArrayList<>();
         for(T vertex : vertexes) {
-            if(!vertex.isConnected()) {
+            if((vertex.isEnabled() | all) && !vertex.isConnected()) {
                 isolated.add(vertex);
             }
         }
@@ -124,17 +104,17 @@ public abstract class GraphMeta<T extends VertexMeta, U extends EdgeMeta<T>> {
         return next;
     }
 
-    public List<T> getFlowStartVertexes(boolean all,
+    public List<T> getFlowStartVertexes(boolean containDisabledNode,
                                         boolean containIsolateNode) {
         List<T> vertexes = new ArrayList<>();
         for(U edge: edges) {
             T t = edge.getStartNode();
-            if(findPreviousVertex(t, all).isEmpty()) {
+            if(findPreviousVertex(t, containDisabledNode).isEmpty()) {
                 addVertex(vertexes, t);
             }
         }
         if(containIsolateNode) {
-            List<T> isolationNodes = getIsolateVertexes();
+            List<T> isolationNodes = getIsolateVertexes(containDisabledNode);
             for (T t: isolationNodes) {
                 addVertex(vertexes, t);
             }
@@ -142,17 +122,17 @@ public abstract class GraphMeta<T extends VertexMeta, U extends EdgeMeta<T>> {
         return vertexes;
     }
 
-    public List<T> getFlowEndVertexes(boolean all,
+    public List<T> getFlowEndVertexes(boolean containDisabledNode,
                                       boolean containIsolateNode) {
         List<T> vertexes = new ArrayList<>();
         for(U edge: edges) {
             T t = edge.getStartNode();
-            if(findNextVertex(t, all).isEmpty()) {
+            if(findNextVertex(t, containDisabledNode).isEmpty()) {
                 addVertex(vertexes, t);
             }
         }
         if(containIsolateNode) {
-            List<T> isolationNodes = getIsolateVertexes();
+            List<T> isolationNodes = getIsolateVertexes(containDisabledNode);
             for (T t: isolationNodes) {
                 addVertex(vertexes, t);
             }
