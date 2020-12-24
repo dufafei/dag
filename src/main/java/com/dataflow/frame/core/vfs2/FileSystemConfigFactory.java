@@ -17,9 +17,6 @@ public class FileSystemConfigFactory {
                                                    FileSystemOptions sourceOptions,
                                                    String vfsFilename,
                                                    String scheme) throws IOException {
-        if (varSpace == null || vfsFilename == null) {
-            return null;
-        }
         FileSystemConfigBuilder configBuilder = getConfigBuilder();
         FileSystemOptions fsOptions = (sourceOptions == null) ? new FileSystemOptions() : sourceOptions;
         // 变量列表
