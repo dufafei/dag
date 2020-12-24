@@ -9,8 +9,8 @@ public abstract class VertexMeta<T extends GraphMeta> {
     private String nodeId; // 节点唯一标识
     private String nodeName; // 节点名称
     private String nodeType; // 节点类型
-    private boolean isolated; // 是否被线连接
-    private boolean enabled; // 启用/禁用
+    private boolean connected; // 是否被线连接
+    private boolean enabled; // 是否启用
     private T parent;
 
     public String getNodeId() { return nodeId; }
@@ -19,8 +19,8 @@ public abstract class VertexMeta<T extends GraphMeta> {
     public void setNodeName(String nodeName) { this.nodeName = nodeName; }
     public String getNodeType() { return nodeType; }
     public void setNodeType(String nodeType) { this.nodeType = nodeType; }
-    public boolean isIsolated() { return isolated; }
-    public void setIsolated(boolean isolated) { this.isolated = isolated; }
+    public boolean isConnected() { return connected; }
+    public void setConnected(boolean connected) { this.connected = connected; }
     public boolean isEnabled() { return enabled; }
     public void setEnabled(boolean enabled) { this.enabled = enabled; }
     public T getParent() { return parent; }
