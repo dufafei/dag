@@ -66,9 +66,4 @@ public class Plugin implements PluginInterface {
     public Map<String, Object> getExtensionOptions() {
         return extensionOptions;
     }
-
-    @Override
-    public void addExtensionOption(String key, Object value) {
-        extensionOptions.put(key, value);
-    }
 }

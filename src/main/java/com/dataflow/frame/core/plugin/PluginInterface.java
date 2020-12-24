@@ -62,10 +62,4 @@ public interface PluginInterface {
      * @return 插件扩展信息
      */
     Map<String, Object> getExtensionOptions();
-
-    /**
-     *
-     * 添加插件扩展信息
-     */
-    void addExtensionOption(String key, Object value);
 }
