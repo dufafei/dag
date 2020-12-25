@@ -3,26 +3,36 @@ package com.dataflow.frame.meta;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ * @param <T>
+ * @param <U>
+ */
 public abstract class FlowMeta<T extends VertexMeta, U extends EdgeMeta<T>> {
 
     private List<T> vertexes = new ArrayList<>();
     private List<U> edges = new ArrayList<>();
 
     public void addVertex(T t) { vertexes.add(t); }
+
     public void addVertex(List<T> vertexes, T t) {
         int idx = vertexes.indexOf(t);
         if(idx < 0) vertexes.add(t);
     }
 
     public void addEdge(U u) { edges.add(u); }
+
     public void addEdge(List<U> edges, U u) {
         int idx = edges.indexOf(u);
         if(idx < 0) edges.add(u);
     }
 
     public int nrVertex() { return vertexes.size(); }
+
     public int nrEdge() { return edges.size(); }
+
     public T getVertex(int i) { return vertexes.get(i); }
+
     public U getEdge(int i) { return edges.get(i); }
 
     public List<String> getVertexIds(List<T> vertexes) {
