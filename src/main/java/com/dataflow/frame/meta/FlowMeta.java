@@ -3,11 +3,6 @@ package com.dataflow.frame.meta;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @param <T>
- * @param <U>
- */
 public abstract class FlowMeta<T extends VertexMeta, U extends EdgeMeta<T>> {
 
     private List<T> vertexes = new ArrayList<>();

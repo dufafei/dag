@@ -1,17 +1,13 @@
 package com.dataflow.frame.meta;
 
-/**
- * 点的属性
- * @param <T>
- */
 public abstract class VertexMeta<T extends FlowMeta> {
 
-    private String nodeId; // 节点标识
-    private String nodeName; // 节点名称
-    private boolean connected; // 是否被线连接
-    private boolean enabled; // 是否启用
+    private String nodeId;
+    private String nodeName;
+    private boolean connected;
+    private boolean enabled;
     private T parent;
-    private String index; // 下标
+    private String index;
 
     public String getNodeId() { return nodeId; }
 

@@ -1,4 +1,4 @@
-package com.dataflow.frame.resolver.mxgraph.util;
+package com.dataflow.frame.util;
 
 import com.mxgraph.canvas.mxGraphicsCanvas2D;
 import com.mxgraph.reader.mxSaxOutputHandler;

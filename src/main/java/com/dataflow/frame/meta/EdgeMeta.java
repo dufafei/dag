@@ -1,14 +1,10 @@
 package com.dataflow.frame.meta;
 
-/**
- * 边的属性
- * @param <T>
- */
 public abstract class EdgeMeta<T extends VertexMeta> {
 
-    private T startNode; // 起始点
-    private T endNode; // 终止点
-    private boolean enabled; // 是否启用
+    private T startNode;
+    private T endNode;
+    private boolean enabled;
 
     public T getStartNode() { return startNode; }
 

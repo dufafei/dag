@@ -1,4 +1,4 @@
-package com.dataflow.frame.resolver.xml.util;
+package com.dataflow.frame.util;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.StringEscapeUtils;
