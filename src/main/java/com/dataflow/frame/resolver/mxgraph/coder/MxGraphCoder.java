@@ -11,7 +11,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 /**
- * 基于前端mxGraph解析(xml格式)
+ * 基于前端mxGraph解析
  */
 public abstract class MxGraphCoder implements XmlCoder {
 

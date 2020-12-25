@@ -11,7 +11,6 @@ public abstract class VertexMeta<T extends FlowMeta> {
     private boolean connected; // 是否被线连接
     private boolean enabled; // 是否启用
     private T parent;
-    private Integer index; // 节点的索引位置
 
     public String getNodeId() { return nodeId; }
     public void setNodeId(String nodeId) { this.nodeId = nodeId; }
@@ -23,6 +22,4 @@ public abstract class VertexMeta<T extends FlowMeta> {
     public void setEnabled(boolean enabled) { this.enabled = enabled; }
     public T getParent() { return parent; }
     public void setParent(T parent) { this.parent = parent; }
-    public Integer getIndex() { return index; }
-    public void setIndex(Integer index) { this.index = index; }
 }
