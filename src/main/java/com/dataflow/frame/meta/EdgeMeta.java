@@ -11,9 +11,20 @@ public abstract class EdgeMeta<T extends VertexMeta> {
     private boolean enabled; // 是否启用
 
     public T getStartNode() { return startNode; }
-    public void setStartNode(T startNode) { this.startNode = startNode; }
+
+    public void setStartNode(T startNode) {
+        startNode.setConnected(true);
+        this.startNode = startNode;
+    }
+
     public T getEndNode() { return endNode; }
-    public void setEndNode(T endNode) { this.endNode = endNode; }
+
+    public void setEndNode(T endNode) {
+        endNode.setConnected(true);
+        this.endNode = endNode;
+    }
+
     public boolean isEnabled() { return enabled; }
+
     public void setEnabled(boolean enabled) { this.enabled = enabled; }
 }
