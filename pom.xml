@@ -10,7 +10,6 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.build.finalName>dataflow-core</project.build.finalName>
         <jdk.version>1.8</jdk.version>
     </properties>
 
