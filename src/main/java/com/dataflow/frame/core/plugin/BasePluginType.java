@@ -2,6 +2,8 @@ package com.dataflow.frame.core.plugin;
 
 import com.dataflow.frame.core.loader.DataFlowLoader;
 import com.dataflow.frame.core.vfs2.FileVFS2;
+import com.dataflow.frame.core.vfs2.Folder;
+import com.dataflow.frame.core.vfs2.FolderInterface;
 import org.apache.commons.vfs2.FileObject;
 import org.scannotation.AnnotationDB;
 import java.io.File;
@@ -16,7 +18,7 @@ public abstract class BasePluginType implements PluginTypeInterface {
     protected String id;
     protected String name;
     protected Class<? extends java.lang.annotation.Annotation> pluginType;
-    protected List<PluginFolderInterface> pluginFolders;
+    protected List<FolderInterface> pluginFolders;
 
     public BasePluginType(String id, String name, Class<? extends Annotation> pluginType) {
         this.id = id;
@@ -28,10 +30,10 @@ public abstract class BasePluginType implements PluginTypeInterface {
     public String getId() { return id; }
     public String getName() { return name; }
     public Class<? extends Annotation> getPluginType() { return pluginType; }
-    public List<PluginFolderInterface> getPluginFolders() { return pluginFolders; }
+    public List<FolderInterface> getPluginFolders() { return pluginFolders; }
 
     public void searchPlugins() throws Exception {
-        for (PluginFolderInterface pluginFolder: getPluginFolders()) {
+        for (FolderInterface pluginFolder: getPluginFolders()) {
             FileObject[] fileObjectList = pluginFolder.findJarFiles(false);
             if(fileObjectList != null) {
                 for (FileObject fileObject: fileObjectList) {
@@ -41,15 +43,17 @@ public abstract class BasePluginType implements PluginTypeInterface {
                     AnnotationDB annotationDB = new AnnotationDB();
                     annotationDB.scanArchives(fileObject.getURL());
                     Set<String> impls = annotationDB.getAnnotationIndex().get(pluginType.getName());
-                    for (String imp: impls) {
-                        try {
-                            ClassLoader classLoader = getClass().getClassLoader();
-                            URLClassLoader urlClassLoader = new DataFlowLoader(urls.toArray(new URL[0]), classLoader);
-                            Class<?> clazz = urlClassLoader.loadClass(imp);
-                            Annotation annotation = clazz.getAnnotation(pluginType);
-                            handlePluginAnnotation(clazz, annotation, libraries, urlClassLoader);
-                        } catch (Exception e) {
-                            throw new Exception("Unexpected error registering jar plugin file: " + fileObject.getURL(), e);
+                    if(impls != null) {
+                        for (String imp: impls) {
+                            try {
+                                ClassLoader classLoader = getClass().getClassLoader();
+                                URLClassLoader urlClassLoader = new DataFlowLoader(urls.toArray(new URL[0]), classLoader);
+                                Class<?> clazz = urlClassLoader.loadClass(imp);
+                                Annotation annotation = clazz.getAnnotation(pluginType);
+                                handlePluginAnnotation(clazz, annotation, libraries, urlClassLoader);
+                            } catch (Exception e) {
+                                throw new Exception("Unexpected error registering jar plugin file: " + fileObject.getURL(), e);
+                            }
                         }
                     }
                 }
@@ -63,10 +67,10 @@ public abstract class BasePluginType implements PluginTypeInterface {
         String path = fileObject.getURL().getFile();
         path = URLDecoder.decode(path, "UTF-8");
         File file = new File(path);
-        String libFolder = file.getParent() + "/lib";
-        if (new File(libFolder).exists()) {
-            PluginFolder pluginLibFolder = new PluginFolder(libFolder);
-            FileObject[] jarFiles = pluginLibFolder.findJarFiles(true);
+        String libFolderPath = file.getParent() + "/lib";
+        if (new File(libFolderPath).exists()) {
+            Folder libFolder = new Folder(libFolderPath);
+            FileObject[] jarFiles = libFolder.findJarFiles(true);
             fileObjects.addAll(Arrays.asList(jarFiles));
         }
         return fileObjects;
@@ -119,5 +123,5 @@ public abstract class BasePluginType implements PluginTypeInterface {
 
     protected abstract String extractCategory(java.lang.annotation.Annotation annotation);
 
-    protected abstract void addExtraMessages(Annotation annotation, Map<String, Object> extensionOptions);
+    protected void addExtraMessages(Annotation annotation, Map<String, Object> extensionOptions) {}
 }

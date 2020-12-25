@@ -10,10 +10,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-/**
- * 基于前端mxGraph解析
- */
-public abstract class MxGraphCoder implements XmlCoder {
+public abstract class MxCoder implements XmlCoder {
 
     @Override
     public FlowMeta decode(String xml) throws Exception {
@@ -25,7 +22,7 @@ public abstract class MxGraphCoder implements XmlCoder {
         return decode(graph);
     }
 
-    public abstract FlowMeta decode(mxGraph graph) throws Exception;
+    protected abstract FlowMeta decode(mxGraph graph) throws Exception;
 
     @Override
     public String encode(FlowMeta meta) throws Exception {
@@ -41,5 +38,5 @@ public abstract class MxGraphCoder implements XmlCoder {
         return mxUtils.getPrettyXml(node);
     }
 
-    public abstract void encode(FlowMeta meta, mxGraph graph) throws Exception;
+    protected abstract void encode(FlowMeta meta, mxGraph graph) throws Exception;
 }

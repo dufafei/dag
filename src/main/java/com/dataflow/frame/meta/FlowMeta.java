@@ -51,6 +51,14 @@ public abstract class FlowMeta<T extends VertexMeta, U extends EdgeMeta<T>> {
         return names;
     }
 
+    public List<String> getVertexIndexes(List<T> vertexes) {
+        List<String> names = new ArrayList<>();
+        for(T vertex : vertexes) {
+            names.add(vertex.getIndex());
+        }
+        return names;
+    }
+
     public T findVertexByID(String id) {
         for (T vertex : vertexes) {
             if(vertex.getNodeId().equals(id)){

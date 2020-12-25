@@ -1,8 +1,8 @@
-package com.dataflow.frame.core.plugin;
+package com.dataflow.frame.core.vfs2;
 
 import org.apache.commons.vfs2.FileObject;
 
-public interface PluginFolderInterface {
+public interface FolderInterface {
 
     /**
      *

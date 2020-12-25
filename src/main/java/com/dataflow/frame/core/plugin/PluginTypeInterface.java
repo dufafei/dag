@@ -1,5 +1,7 @@
 package com.dataflow.frame.core.plugin;
 
+import com.dataflow.frame.core.vfs2.FolderInterface;
+
 import java.lang.annotation.Annotation;
 import java.net.URLClassLoader;
 import java.util.List;
@@ -27,7 +29,7 @@ public interface PluginTypeInterface {
     /**
      * 获取此类插件存放的目录
      */
-    List<PluginFolderInterface> getPluginFolders();
+    List<FolderInterface> getPluginFolders();
 
     /**
      * 搜索此类型下的插件

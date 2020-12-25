@@ -6,7 +6,6 @@ import org.w3c.dom.Element;
 
 public interface EdgeCoder {
 
-    Element encodeEdge(EdgeMeta edgeMeta) throws Exception;
-
-    void decodeEdge(EdgeMeta edgeMeta, mxCell cell) throws Exception;
+    Element encodeMx(EdgeMeta edgeMeta) throws Exception;
+    void decodeMx(EdgeMeta edgeMeta, mxCell cell) throws Exception;
 }
