@@ -1,4 +1,4 @@
-package com.dataflow.frame.util;
+package com.dataflow.frame.core.util;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

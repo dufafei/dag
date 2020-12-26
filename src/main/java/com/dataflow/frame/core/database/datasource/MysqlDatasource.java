@@ -1,8 +1,8 @@
-package com.dataflow.frame.database.datasource;
+package com.dataflow.frame.core.database.datasource;
 
 import org.apache.commons.lang3.StringUtils;
-import com.dataflow.frame.database.BaseDatasource;
-import com.dataflow.frame.database.DatasourceMeta;
+import com.dataflow.frame.core.database.BaseDatasource;
+import com.dataflow.frame.core.database.DatasourceMeta;
 
 public class MysqlDatasource extends BaseDatasource {
 

@@ -1,4 +1,4 @@
-package com.dataflow.frame.database;
+package com.dataflow.frame.core.database;
 
 import java.util.Properties;
 

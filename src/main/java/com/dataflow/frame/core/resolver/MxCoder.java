@@ -1,6 +1,6 @@
-package com.dataflow.frame.resolver;
+package com.dataflow.frame.core.resolver;
 
-import com.dataflow.frame.meta.FlowMeta;
+import com.dataflow.frame.core.meta.FlowMeta;
 import com.mxgraph.io.mxCodec;
 import com.mxgraph.util.mxUtils;
 import com.mxgraph.util.mxXmlUtils;

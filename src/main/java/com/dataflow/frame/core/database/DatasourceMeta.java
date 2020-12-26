@@ -1,7 +1,7 @@
-package com.dataflow.frame.database;
+package com.dataflow.frame.core.database;
 
-import com.dataflow.frame.database.datasource.HiveDataSource;
-import com.dataflow.frame.database.datasource.MysqlDatasource;
+import com.dataflow.frame.core.database.datasource.HiveDataSource;
+import com.dataflow.frame.core.database.datasource.MysqlDatasource;
 
 public class DatasourceMeta {
 

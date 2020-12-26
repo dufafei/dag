@@ -1,4 +1,4 @@
-import com.dataflow.frame.consts.Const;
+import com.dataflow.frame.core.consts.Const;
 import com.dataflow.frame.core.plugin.folder.PluginFolder;
 import com.dataflow.frame.core.plugin.folder.PluginFolderInterface;
 import com.dataflow.frame.core.vfs2.FileVFS2;

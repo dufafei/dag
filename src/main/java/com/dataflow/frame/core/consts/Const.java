@@ -1,4 +1,4 @@
-package com.dataflow.frame.consts;
+package com.dataflow.frame.core.consts;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

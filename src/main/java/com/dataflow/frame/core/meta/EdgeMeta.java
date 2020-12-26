@@ -1,4 +1,4 @@
-package com.dataflow.frame.meta;
+package com.dataflow.frame.core.meta;
 
 public abstract class EdgeMeta<T extends VertexMeta> {
 

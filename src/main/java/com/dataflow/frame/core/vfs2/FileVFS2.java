@@ -1,6 +1,6 @@
 package com.dataflow.frame.core.vfs2;
 
-import com.dataflow.frame.consts.Const;
+import com.dataflow.frame.core.consts.Const;
 import com.dataflow.frame.core.env.Variable;
 import com.dataflow.frame.core.env.VariableSpace;
 import org.apache.commons.vfs2.*;

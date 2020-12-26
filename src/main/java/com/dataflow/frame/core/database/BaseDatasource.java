@@ -1,4 +1,4 @@
-package com.dataflow.frame.database;
+package com.dataflow.frame.core.database;
 
 import org.apache.commons.lang3.StringUtils;
 import java.util.ArrayList;

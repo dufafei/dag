@@ -1,6 +1,6 @@
 package com.dataflow.frame.core.plugin;
 
-import com.dataflow.frame.consts.Const;
+import com.dataflow.frame.core.consts.Const;
 import org.apache.commons.lang3.StringUtils;
 import java.net.URLClassLoader;
 import java.util.*;

@@ -1,6 +1,6 @@
-package com.dataflow.frame.resolver;
+package com.dataflow.frame.core.resolver;
 
-import com.dataflow.frame.meta.FlowMeta;
+import com.dataflow.frame.core.meta.FlowMeta;
 
 public interface JsonCoder {
 

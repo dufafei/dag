@@ -1,4 +1,4 @@
-package com.dataflow.frame.database.quality;
+package com.dataflow.frame.core.database.quality;
 
 public class HiveQuality {
 
