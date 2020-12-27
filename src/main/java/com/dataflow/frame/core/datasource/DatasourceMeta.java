@@ -26,6 +26,9 @@ public class DatasourceMeta {
     private DatasourceInterface getDatabaseInterface(String databaseType) throws Exception {
         PluginRegistry registry = PluginRegistry.getInstance();
         PluginInterface sp = registry.getPlugin(DatasourcePluginType.class, databaseType);
+        if(sp == null) {
+            throw new Exception("missing datasource plugin:" + databaseType);
+        }
         return registry.loadClass(sp);
     }
 
