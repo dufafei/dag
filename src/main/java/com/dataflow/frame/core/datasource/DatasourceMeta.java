@@ -5,6 +5,8 @@ import com.dataflow.frame.core.plugin.PluginRegistry;
 
 public class DatasourceMeta {
 
+    private String dbType;
+    private String dbAccess;
     private DatasourceInterface datasourceInterface;
     public static final int TYPE_ACCESS_JDBC = 0;
     public static final int TYPE_ACCESS_ODBC = 1;
@@ -17,25 +19,21 @@ public class DatasourceMeta {
             "Native (JDBC)", "ODBC", "OCI", "Plugin", "JNDI","SPARK_THRIFT"
     };
 
-    public DatasourceMeta(String type, String access,
+    public DatasourceMeta(String dbType, String dbAccess,
                           String host, String port,
                           String db, String user, String pass) throws Exception {
-        setValues(type, access, host, port, db, user, pass);
+        this.dbType = dbType;
+        this.datasourceInterface = getDatabaseInterface(dbType);
+        this.dbAccess = dbAccess;
+        this.datasourceInterface.setAccessType(getAccessType(dbAccess));
+        this.datasourceInterface.setHost(host);
+        this.datasourceInterface.setPort(port);
+        this.datasourceInterface.setDb(db);
+        this.datasourceInterface.setUser(user);
+        this.datasourceInterface.setPass(pass);
     }
 
-    public void setValues(String type, String access,
-                          String host, String port, String db,
-                          String user, String pass) throws Exception {
-        datasourceInterface = getDatabaseInterface(type);
-        datasourceInterface.setAccessType(getAccessType(access));
-        datasourceInterface.setHost(host);
-        datasourceInterface.setPort(port);
-        datasourceInterface.setDb(db);
-        datasourceInterface.setUser(user);
-        datasourceInterface.setPass(pass);
-    }
-
-    public DatasourceInterface getDatabaseInterface(String databaseType) throws Exception {
+    private DatasourceInterface getDatabaseInterface(String databaseType) throws Exception {
         PluginRegistry registry = PluginRegistry.getInstance();
         PluginInterface sp = registry.getPlugin(DatasourcePluginType.class, databaseType);
         return registry.loadClass(sp);
@@ -50,15 +48,21 @@ public class DatasourceMeta {
         return TYPE_ACCESS_JDBC;
     }
 
+    public String getDbType() { return dbType; }
+
     public DatasourceInterface getDatasourceInterface() { return datasourceInterface; }
 
-    public static String[] getDbAccessTypeCode() { return dbAccessTypeCode; }
+    public String getDbAccess() { return dbAccess; }
 
-    public String getDriver() { return datasourceInterface.getDriverClass(); }
+    public String getDriverClass() { return datasourceInterface.getDriverClass(); }
 
-    public String getUrl() { return datasourceInterface.getURL(); }
+    public String getHost() { return datasourceInterface.getHost(); }
 
-    public String getUser() { return datasourceInterface.getUser(); }
+    public String getPort() { return datasourceInterface.getPort(); }
 
-    public String getPass() { return datasourceInterface.getPass(); }
+    public String getDb() { return datasourceInterface.getDb(); }
+
+    public String getUsername() { return datasourceInterface.getUser(); }
+
+    public String getPassword() { return datasourceInterface.getPass(); }
 }
