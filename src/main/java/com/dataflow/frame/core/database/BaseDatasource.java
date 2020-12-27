@@ -7,13 +7,13 @@ import java.util.Properties;
 
 public abstract class BaseDatasource implements DatasourceInterface {
 
-    protected String name; // 连接类型
-    protected int accessType; // 连接方式
-    protected String host; // ip
-    protected String port; // 端口
-    protected String db; // 数据库名称
-    protected String user; // 用户
-    protected String pass; // 密码
+    protected String name;
+    protected int accessType;
+    protected String host;
+    protected String port;
+    protected String db;
+    protected String user;
+    protected String pass;
     protected String servername; // Informix only!
     protected String dataTablespace; // data storage location, For Oracle & perhaps others
     protected String indexTablespace; // index storage location, For Oracle & perhaps others
