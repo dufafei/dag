@@ -1,6 +1,6 @@
 package com.dataflow.frame.core.datasource;
 
-public enum TypeAccess {
+public enum DatasourceTypeAccess {
     TYPE_ACCESS_JDBC("JDBC", 0),
     TYPE_ACCESS_ODBC("ODBC",1),
     TYPE_ACCESS_OCI("OCI",2),
@@ -20,13 +20,13 @@ public enum TypeAccess {
         return code;
     }
 
-    TypeAccess(String type, Integer code) {
+    DatasourceTypeAccess(String type, Integer code) {
         this.type = type;
         this.code = code;
     }
 
-    public static TypeAccess getTypeAccess(String type) {
-        for (TypeAccess value : TypeAccess.values()) {
+    public static DatasourceTypeAccess getTypeAccess(String type) {
+        for (DatasourceTypeAccess value : DatasourceTypeAccess.values()) {
             if(value.getType().equals(type)) {
                 return value;
             }

@@ -29,8 +29,8 @@ public class DatasourceMeta {
         return registry.loadClass(sp);
     }
 
-    private TypeAccess getAccessType(String dbAccess) {
-        return TypeAccess.getTypeAccess(dbAccess);
+    private DatasourceTypeAccess getAccessType(String dbAccess) {
+        return DatasourceTypeAccess.getTypeAccess(dbAccess);
     }
 
     public String getDbType() { return dbType; }
@@ -39,7 +39,7 @@ public class DatasourceMeta {
 
     public DatasourceInterface getDatasourceInterface() { return datasourceInterface; }
 
-    public TypeAccess getAccessType() { return datasourceInterface.getAccessType(); }
+    public DatasourceTypeAccess getAccessType() { return datasourceInterface.getAccessType(); }
 
     public String getHost() { return datasourceInterface.getHost(); }
 

@@ -6,9 +6,9 @@ public interface DatasourceInterface extends Cloneable {
 
     String getName();
 
-    TypeAccess[] getAccessTypeList();
+    DatasourceTypeAccess[] getAccessTypeList();
 
-    TypeAccess getDefaultDatabasePort();
+    DatasourceTypeAccess getDefaultDatabasePort();
 
     String getDriverClass();
 
@@ -16,9 +16,9 @@ public interface DatasourceInterface extends Cloneable {
 
     Properties getAttributes();
 
-    TypeAccess getAccessType();
+    DatasourceTypeAccess getAccessType();
 
-    void setAccessType(TypeAccess accessType);
+    void setAccessType(DatasourceTypeAccess accessType);
 
     String getHost();
 

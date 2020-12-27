@@ -8,7 +8,7 @@ import java.util.Properties;
 public abstract class BaseDatasource implements DatasourceInterface {
 
     protected String name;
-    protected TypeAccess accessType;
+    protected DatasourceTypeAccess accessType;
     protected String host;
     protected String port;
     protected String db;
@@ -33,10 +33,10 @@ public abstract class BaseDatasource implements DatasourceInterface {
     public Properties getAttributes() { return attributes; }
 
     @Override
-    public TypeAccess getAccessType() { return accessType; }
+    public DatasourceTypeAccess getAccessType() { return accessType; }
 
     @Override
-    public void setAccessType(TypeAccess accessType) { this.accessType = accessType; }
+    public void setAccessType(DatasourceTypeAccess accessType) { this.accessType = accessType; }
 
     @Override
     public String getHost() { return host; }
