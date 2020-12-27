@@ -16,7 +16,6 @@ public interface DatasourceInterface extends Cloneable {
 
     Properties getAttributes();
 
-
     int getAccessType();
     void setAccessType(int accessType);
 
