@@ -1,4 +1,4 @@
-package com.dataflow.frame.core.database;
+package com.dataflow.frame.core.datasource;
 
 import com.dataflow.frame.core.plugin.PluginInterface;
 import com.dataflow.frame.core.plugin.PluginRegistry;
