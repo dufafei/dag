@@ -10,7 +10,7 @@ public class PluginRegistry {
 
     // 插件类型
     private static List<PluginTypeInterface> pluginTypes = new ArrayList<>();
-    // 插件类型-> 该类型的插件列表
+    // 插件类型-> 该类型的插件组件
     private Map<Class<? extends PluginTypeInterface>, List<PluginInterface>> pluginMap = new HashMap<>();
     private ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
 
