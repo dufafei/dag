@@ -16,11 +16,11 @@ Dataflow Frame是基于kettle的设计思想开发而来的一个框架。
 
    使用方法：dataflow-engine-azkaban-plugin项目先package，参考test目录。
 
-3. engine-spark（已实现，已开源）
+3. engine-spark（已实现，闭源）
 
-   dataflow-engine-spark：https://gitee.com/dufafei/dataflow-engine-spark.git
+   dataflow-engine-spark：
 
-   dataflow-engine-spark-plugin：https://gitee.com/dufafei/dataflow-engine-spark-plugin.git
+   dataflow-engine-spark-plugin：
 
 4. engine-flink（开发中）
 
