@@ -41,19 +41,24 @@ public abstract class BasePluginType implements PluginTypeInterface {
                     List<URL> urls = getFileUrls(fileObjects);
                     List<String> libraries = getFileNames(fileObjects);
                     AnnotationDB annotationDB = new AnnotationDB();
-                    annotationDB.scanArchives(fileObject.getURL());
-                    Set<String> impls = annotationDB.getAnnotationIndex().get(pluginType.getName());
-                    if(impls != null) {
-                        for (String imp: impls) {
-                            try {
+                    DataFlowLoader urlClassLoader = null;
+                    try {
+                        annotationDB.scanArchives(fileObject.getURL());
+                        Set<String> impls = annotationDB.getAnnotationIndex().get(pluginType.getName());
+                        if(impls != null) {
+                            for (String imp: impls) {
                                 ClassLoader classLoader = getClass().getClassLoader();
-                                URLClassLoader urlClassLoader = new DataFlowLoader(urls.toArray(new URL[0]), classLoader);
+                                urlClassLoader = new DataFlowLoader(urls.toArray(new URL[0]), classLoader);
                                 Class<?> clazz = urlClassLoader.loadClass(imp);
                                 Annotation annotation = clazz.getAnnotation(pluginType);
                                 handlePluginAnnotation(clazz, annotation, libraries, urlClassLoader);
-                            } catch (Exception e) {
-                                throw new Exception("Unexpected error registering jar plugin file: " + fileObject.getURL(), e);
                             }
+                        }
+                    } catch (Exception e) {
+                        throw new Exception("Unable to read jar file: " + fileObject.getURL().toString(), e);
+                    } finally {
+                        if (urlClassLoader != null) {
+                            urlClassLoader.closeClassLoader();
                         }
                     }
                 }

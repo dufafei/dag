@@ -1,5 +1,6 @@
 package com.dataflow.frame.core.datasource;
 
+import java.util.Map;
 import java.util.Properties;
 
 public interface DatasourceInterface extends Cloneable {
@@ -51,4 +52,7 @@ public interface DatasourceInterface extends Cloneable {
     String getIndexTablespace();
 
     void setIndexTablespace(String IndexTablespace);
+
+    // spark专用
+    Map<String, String> getSparkOptions();
 }

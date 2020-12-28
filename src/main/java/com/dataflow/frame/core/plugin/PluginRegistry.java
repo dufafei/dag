@@ -9,13 +9,16 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 public class PluginRegistry {
 
     // 插件类型
-    private static List<PluginTypeInterface> pluginTypes = new ArrayList<>();
+    private static List<PluginTypeInterface> pluginTypes;
     // 插件类型-> 该类型的插件组件
-    private Map<Class<? extends PluginTypeInterface>, List<PluginInterface>> pluginMap = new HashMap<>();
+    private Map<Class<? extends PluginTypeInterface>, List<PluginInterface>> pluginMap;
     private ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
 
     private static final PluginRegistry pluginRegistry = new PluginRegistry();
-    private PluginRegistry() {};
+    private PluginRegistry() {
+        pluginTypes =  new ArrayList<>();
+        pluginMap = new HashMap<>();
+    }
     public static PluginRegistry getInstance() {
         return pluginRegistry;
     }
@@ -23,6 +26,7 @@ public class PluginRegistry {
     public static synchronized void addPluginType(PluginTypeInterface type) {
         pluginTypes.add(type);
     }
+
     public List<PluginTypeInterface> getPluginType() {
         lock.readLock().lock();
         try {

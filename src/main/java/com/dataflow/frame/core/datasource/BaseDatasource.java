@@ -3,6 +3,7 @@ package com.dataflow.frame.core.datasource;
 import org.apache.commons.lang3.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 public abstract class BaseDatasource implements DatasourceInterface {
@@ -18,6 +19,7 @@ public abstract class BaseDatasource implements DatasourceInterface {
     protected String dataTablespace; // data storage location, For Oracle & perhaps others
     protected String indexTablespace; // index storage location, For Oracle & perhaps others
     protected Properties attributes; // 连接参数
+    protected Map<String, String> sparkOptions;
 
     public BaseDatasource(){
         attributes = new Properties();
