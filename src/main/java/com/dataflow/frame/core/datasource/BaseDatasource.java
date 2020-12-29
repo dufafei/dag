@@ -4,13 +4,9 @@ import java.util.*;
 
 public abstract class BaseDatasource implements DatasourceInterface {
 
-    /**
-     * The prefix for all the extra options attributes
-     */
+    // The prefix for all the extra options attributes
     public static final String ATTRIBUTE_PREFIX_EXTRA_OPTION = "EXTRA_OPTION_";
-    /**
-     * A flag to determine if the connection is clustered or not.
-     */
+    //  A flag to determine if the connection is clustered or not.
     public static final String ATTRIBUTE_IS_CLUSTERED = "IS_CLUSTERED";
 
     protected String name;
