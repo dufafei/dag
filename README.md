@@ -10,7 +10,7 @@ Dataflow Frame是基于kettle的设计思想开发而来的一个框架。
 
 2. engine-azkaban
 
-   dataflow-engine-azkaban：https://gitee.com/dufafei/dataflow-engine-azkaban
+   dataflow-engine-azkaban：闭源
 
    dataflow-engine-azkaban-plugin：https://gitee.com/dufafei/dataflow-engine-azkaban-plugin
 
@@ -18,7 +18,7 @@ Dataflow Frame是基于kettle的设计思想开发而来的一个框架。
 
 3. engine-spark
 
-   dataflow-engine-spark：https://gitee.com/dufafei/dataflow-engine-spark.git
+   dataflow-engine-spark：闭源
 
    dataflow-engine-spark-plugin：https://gitee.com/dufafei/dataflow-engine-spark-plugin.git
 
