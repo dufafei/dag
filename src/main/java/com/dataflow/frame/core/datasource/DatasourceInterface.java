@@ -15,8 +15,6 @@ public interface DatasourceInterface extends Cloneable {
 
     String getURL();
 
-    Properties getAttributes();
-
     DatasourceTypeAccess getAccessType();
 
     void setAccessType(DatasourceTypeAccess accessType);
@@ -53,6 +51,32 @@ public interface DatasourceInterface extends Cloneable {
 
     void setIndexTablespace(String IndexTablespace);
 
+    // url后面是否支持添加选项
+    boolean supportsOptionsInURL();
+
+    // url和选项之间的分隔符 一般是?
+    String getExtraOptionIndicator();
+
+    // 选项与选项值的分隔符 一般是=
+    String getExtraOptionValueSeparator();
+
+    // 选项之间的分隔符 一般是&
+    String getExtraOptionSeparator();
+
+    // 添加url选项
+    void addExtraOption(String option, String value);
+
+    // 添加url默认选项
+    void addDefaultOptions();
+
+    // 获取url选项
+    Map<String, String> getExtraOptions();
+
+    boolean isPartitioned();
+
+    void setPartitioned(boolean clustered);
+
     // spark专用
-    Map<String, String> getSparkOptions();
+    //Map<String, String> getSparkReadOptions();
+    //Map<String, String> getSparkWriteOptions();
 }
