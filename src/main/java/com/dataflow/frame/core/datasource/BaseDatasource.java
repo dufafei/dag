@@ -24,13 +24,9 @@ public abstract class BaseDatasource implements DatasourceInterface {
     protected String dataTablespace; // data storage location, For Oracle & perhaps others
     protected String indexTablespace; // index storage location, For Oracle & perhaps others
     protected Properties attributes; // 连接参数
-    protected Map<String, String> sparkReadOptions;
-    protected Map<String, String> sparkWriteOptions;
 
     public BaseDatasource(){
         attributes = new Properties();
-        sparkReadOptions = new HashMap<>();
-        sparkWriteOptions = new HashMap<>();
         if (getAccessTypeList() != null && getAccessTypeList().length > 0) {
             // 默认值
             accessType = getAccessTypeList()[0];
