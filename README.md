@@ -20,11 +20,15 @@ core是一个抽象层，可以集成任意能够组件化，流程化的计算�
 
 spark，flink，azkaban的实现及web端闭源开发。
 
-[1]: https://gitee.com/dufafei/dataflow-datasource-plugin.git	"数据源插件"
-[2]: https://gitee.com/dufafei/dataflow-engine-spark-plugin.git	"spark插件"
-[3]: https://gitee.com/dufafei/dataflow-engine-azkaban-plugin.git	"azkaban插件"
+## 插件列表
 
-# 亮点
+1. https://gitee.com/dufafei/dataflow-datasource-plugin.git
+
+2. https://gitee.com/dufafei/dataflow-engine-spark-plugin.git
+
+3. https://gitee.com/dufafei/dataflow-engine-azkaban-plugin.git 
+
+## 亮点
 
 1 解析方式可扩展。框架定义了基于前端mxGraph的解析方式。你也可以自定义。
 
