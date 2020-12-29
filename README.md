@@ -12,25 +12,19 @@ core是一个抽象层，可以集成任意能够组件化，流程化的计算�
 
 可以基于azkban作为调度引擎，开发工作流的组件。
 
-通过spark，flink，azkaban的组件可以替代kettle的job和step插件。
+通过spark，flink，azkaban插件件可以替代kettle的job和step插件。
 
-让kettle和大数据结合起来，既有kettle的功能又有大数据的性能。
+让kettle和大数据有机结合，做到既有kettle的强大功能又有大数据的强大性能。
 
 同时，基于统一的抽象层，可以完成插件的统一管理等功能。
 
 spark，flink，azkaban的实现及web端闭源开发。
 
-1.  数据源插件
+[1.数据源插件]: https://gitee.com/dufafei/dataflow-datasource-plugin.git
+[2.spark插件]: https://gitee.com/dufafei/dataflow-engine-spark-plugin.git
+[3.azkaban插件]: https://gitee.com/dufafei/dataflow-engine-azkaban-plugin.git
 
-   https://gitee.com/dufafei/dataflow-datasource-plugin.git
 
-2. spark插件
-
-   https://gitee.com/dufafei/dataflow-engine-spark-plugin.git
-
-3.  azkaban插件
-
-    https://gitee.com/dufafei/dataflow-engine-azkaban-plugin.git
 
 # 亮点
 
