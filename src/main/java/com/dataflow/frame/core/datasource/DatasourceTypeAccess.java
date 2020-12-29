@@ -6,7 +6,7 @@ public enum DatasourceTypeAccess {
     TYPE_ACCESS_OCI("OCI",2),
     TYPE_ACCESS_Plugin("Plugin",3),
     TYPE_ACCESS_JNDI("JNDI",4),
-    TYPE_ACCESS_SPARK_THRIFT("SPARK_THRIFT",5),
+    // TYPE_ACCESS_SPARK_THRIFT("SPARK_THRIFT",5),
     ;
 
     private String type;

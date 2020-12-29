@@ -1,12 +1,17 @@
 package com.dataflow.frame.core.datasource;
 
-import org.apache.commons.lang3.StringUtils;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 public abstract class BaseDatasource implements DatasourceInterface {
+
+    /**
+     * The prefix for all the extra options attributes
+     */
+    public static final String ATTRIBUTE_PREFIX_EXTRA_OPTION = "EXTRA_OPTION_";
+    /**
+     * A flag to determine if the connection is clustered or not.
+     */
+    public static final String ATTRIBUTE_IS_CLUSTERED = "IS_CLUSTERED";
 
     protected String name;
     protected DatasourceTypeAccess accessType;
@@ -19,10 +24,13 @@ public abstract class BaseDatasource implements DatasourceInterface {
     protected String dataTablespace; // data storage location, For Oracle & perhaps others
     protected String indexTablespace; // index storage location, For Oracle & perhaps others
     protected Properties attributes; // 连接参数
-    protected Map<String, String> sparkOptions;
+    protected Map<String, String> sparkReadOptions;
+    protected Map<String, String> sparkWriteOptions;
 
     public BaseDatasource(){
         attributes = new Properties();
+        sparkReadOptions = new HashMap<>();
+        sparkWriteOptions = new HashMap<>();
         if (getAccessTypeList() != null && getAccessTypeList().length > 0) {
             // 默认值
             accessType = getAccessTypeList()[0];
@@ -31,8 +39,6 @@ public abstract class BaseDatasource implements DatasourceInterface {
 
     @Override
     public String getName() { return name; }
-
-    public Properties getAttributes() { return attributes; }
 
     @Override
     public DatasourceTypeAccess getAccessType() { return accessType; }
@@ -87,17 +93,35 @@ public abstract class BaseDatasource implements DatasourceInterface {
     @Override
     public void setIndexTablespace(String indexTablespace) { this.indexTablespace = indexTablespace; }
 
-    public String urlJoint(String prefix, String separator) {
-        List<String> params = new ArrayList<>();
-        for (Object o : attributes.keySet()) {
-            String key = (String) o;
-            String value = attributes.getProperty(key);
-            params.add(key + "=" + value);
-        }
-        return prefix + StringUtils.join(params, separator);
+    @Override
+    public void addExtraOption(String option, String value) {
+        attributes.put(ATTRIBUTE_PREFIX_EXTRA_OPTION + option, value);
     }
 
-    public String urlJoint() {
-        return urlJoint("?", "&");
+    @Override
+    public void addDefaultOptions() {}
+
+    @Override
+    public Map<String, String> getExtraOptions() {
+        Map<String, String> map = new Hashtable<>();
+        for (Enumeration<Object> keys = attributes.keys(); keys.hasMoreElements();) {
+            String attribute = (String) keys.nextElement();
+            if (attribute.startsWith(ATTRIBUTE_PREFIX_EXTRA_OPTION) ) {
+                String value = attributes.getProperty(attribute, "");
+                map.put(attribute.substring(ATTRIBUTE_PREFIX_EXTRA_OPTION.length()), value);
+            }
+        }
+        return map;
+    }
+
+    @Override
+    public boolean isPartitioned() {
+        String isClustered = attributes.getProperty(ATTRIBUTE_IS_CLUSTERED);
+        return "Y".equalsIgnoreCase(isClustered);
+    }
+
+    @Override
+    public void setPartitioned(boolean clustered) {
+        attributes.setProperty(ATTRIBUTE_IS_CLUSTERED, clustered ? "Y" : "N");
     }
 }
