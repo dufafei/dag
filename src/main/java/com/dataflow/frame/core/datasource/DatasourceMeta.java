@@ -125,4 +125,28 @@ public class DatasourceMeta {
     public String getExtraOptionSeparator() { return datasourceInterface.getExtraOptionSeparator(); }
 
     public Map<String, String> getExtraOptions() { return datasourceInterface.getExtraOptions(); }
+
+    public String stripCR(String sql) {
+        if (sql == null) {
+            return null;
+        }
+        return stripCR(new StringBuilder(sql));
+    }
+
+    private boolean supportsNewLinesInSQL() {
+        return datasourceInterface.supportsNewLinesInSQL();
+    }
+
+    public String stripCR(StringBuilder sql) {
+        // DB2 Can't handle \n in SQL Statements...
+        if (!supportsNewLinesInSQL()) {
+            // Remove CR's
+            for (int i = sql.length() - 1; i >= 0; i--) {
+                if (sql.charAt(i) == '\n' || sql.charAt(i) == '\r') {
+                    sql.setCharAt(i, ' ');
+                }
+            }
+        }
+        return sql.toString();
+    }
 }

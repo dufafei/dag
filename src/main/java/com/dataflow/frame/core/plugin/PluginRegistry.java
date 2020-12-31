@@ -113,15 +113,43 @@ public class PluginRegistry {
         return null;
     }
 
+    public String getPluginId(Class<? extends PluginTypeInterface> pluginType, Object pluginClass) {
+        String className = pluginClass.getClass().getName();
+        for (PluginInterface plugin : getPlugins(pluginType)) {
+            /*for (String check : plugin.getClassMap().values()) {
+                if (check != null && check.equals(className)) {
+                    return plugin.getIds()[0];
+                }
+            }*/
+            if(plugin.getClassName().equals(className)) {
+                return plugin.getId();
+            }
+        }
+        return null;
+    }
+
+    public PluginInterface getPlugin( Class<? extends PluginTypeInterface> pluginType, Object pluginClass ) {
+        String pluginId = getPluginId( pluginType, pluginClass );
+        if ( pluginId == null ) {
+            return null;
+        }
+        return getPlugin(pluginType, pluginId);
+    }
+
     /**
      * classpath 下使用Class.forName
      * jar包下使用 urlClassLoader.loadClass
      */
     @SuppressWarnings("unchecked")
-    public <T> T loadClass(PluginInterface plugin) throws Exception {
-        String className = plugin.getClassName();
-        URLClassLoader ucl = plugin.getUrlClassLoader();
-        Class<? extends T> cl = (Class<? extends T>) ucl.loadClass(className);
-        return cl.newInstance();
+    public <T> T loadClass(PluginInterface plugin) {
+        try {
+            String className = plugin.getClassName();
+            URLClassLoader ucl = plugin.getUrlClassLoader();
+            Class<? extends T> cl = (Class<? extends T>) ucl.loadClass(className);
+            return cl.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

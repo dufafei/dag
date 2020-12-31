@@ -1,7 +1,6 @@
 package com.dataflow.frame.core.datasource;
 
 import java.util.Map;
-import java.util.Properties;
 
 public interface DatasourceInterface extends Cloneable {
 
@@ -76,7 +75,13 @@ public interface DatasourceInterface extends Cloneable {
 
     void setPartitioned(boolean clustered);
 
-    // spark专用
-    //Map<String, String> getSparkReadOptions();
-    //Map<String, String> getSparkWriteOptions();
+    // 如果数据库支持SQL语句中的换行，则为true。
+    boolean supportsNewLinesInSQL();
+
+    // 如果数据库支持从准备好的语句检索查询元数据，则为true。
+    // 如果查询为False需要先执行。
+    boolean supportsPreparedStatementMetadataRetrieval();
+
+    // 是否支持truncate,不是所有的数据库都支持truncate table,其中PostgresDialect就不支持
+    boolean supportsTruncateTable();
 }

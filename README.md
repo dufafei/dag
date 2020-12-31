@@ -6,13 +6,13 @@ core是一个抽象层，可以集成任意能够组件化，流程化的计算�
 
 通过web界面以组件拖拉拽的形式，完成可视化操作。
 
-替代传统手动书写代码或者编写配置文件的文件。
+替代传统手动写代码或者编写配置文件的形式。
 
 可以基于spark，flink作为计算引擎，开发etl的组件或者算法模型的组件。
 
 可以基于azkban作为调度引擎，开发工作流的组件。
 
-通过spark，flink，azkaban插件件可以替代kettle的job和step插件。
+通过spark，flink，azkaban插件可以替代kettle的job和step插件。
 
 让kettle和大数据有机结合，做到既有kettle的强大功能又有大数据的强大性能。
 

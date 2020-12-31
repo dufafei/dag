@@ -108,7 +108,7 @@ public abstract class FlowMeta<T extends VertexMeta, U extends EdgeMeta<T>> {
     public List<T> findEndVertexes(boolean all) {
         List<T> vertexes = new ArrayList<>();
         for(U edge: edges) {
-            T t = edge.getStartNode();
+            T t = edge.getEndNode();
             if(findNextVertexes(t, all).isEmpty()) {
                 addVertex(vertexes, t);
             }
