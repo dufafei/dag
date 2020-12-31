@@ -1,6 +1,6 @@
 # Dataflow Frame
 
-Dataflow Frame是基于kettle的设计思想开发而来的一个框架。
+Dataflow Frame是基于kettle的设计思想开发而来的一个j基础框架。
 
 core是一个抽象层，可以集成任意能够组件化，流程化的计算引擎或者调度框架。
 
@@ -10,6 +10,8 @@ core是一个抽象层，可以集成任意能够组件化，流程化的计算�
 
 可以基于spark，flink作为计算引擎，开发etl的组件或者算法模型的组件。
 
+**ps:  支持复杂操作！！！而不是只支持读写！！！**
+
 可以基于azkban作为调度引擎，开发工作流的组件。
 
 通过spark，flink，azkaban插件可以替代kettle的job和step插件。
@@ -18,7 +20,7 @@ core是一个抽象层，可以集成任意能够组件化，流程化的计算�
 
 同时，基于统一的抽象层，可以完成插件的统一管理等功能。
 
-spark，flink，azkaban的实现及web端闭源开发。
+spark，flink，azkaban的集成端及web端闭源开发。
 
 ## 插件列表
 
