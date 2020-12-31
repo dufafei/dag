@@ -30,14 +30,6 @@ public abstract class FlowMeta<T extends VertexMeta, U extends EdgeMeta<T>> {
 
     public U getEdge(int i) { return edges.get(i); }
 
-    public List<String> getVertexIds(List<T> vertexes) {
-        List<String> ids = new ArrayList<>();
-        for(T vertex : vertexes) {
-            ids.add(vertex.getNodeId());
-        }
-        return ids;
-    }
-
     public List<String> getVertexNames(List<T> vertexes) {
         List<String> names = new ArrayList<>();
         for(T vertex : vertexes) {
@@ -54,18 +46,18 @@ public abstract class FlowMeta<T extends VertexMeta, U extends EdgeMeta<T>> {
         return names;
     }
 
-    public T findVertexByID(String id) {
+    public T findVertexByName(String name) {
         for (T vertex : vertexes) {
-            if(vertex.getNodeId().equals(id)){
+            if(vertex.getNodeName().equals(name)){
                 return vertex;
             }
         }
         return null;
     }
 
-    public T findVertexByName(String name) {
+    public T findVertexByIndex(String index) {
         for (T vertex : vertexes) {
-            if(vertex.getNodeName().equals(name)){
+            if(vertex.getIndex().equals(index)){
                 return vertex;
             }
         }

@@ -1,5 +1,7 @@
 package com.dataflow.frame.core.row;
 
+import org.apache.commons.lang3.StringUtils;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RowMeta implements RowMetaInterface {
@@ -40,5 +42,14 @@ public class RowMeta implements RowMetaInterface {
             }
         }
         return null;
+    }
+
+    @Override
+    public String toString() {
+        List<String> names = new ArrayList<>();
+        for (ValueMetaInterface valueMeta: getValueMetaList()) {
+            names.add(valueMeta.getName());
+        }
+        return StringUtils.join(names, ",");
     }
 }
