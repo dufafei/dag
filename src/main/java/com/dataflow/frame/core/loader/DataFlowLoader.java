@@ -145,7 +145,7 @@ public class DataFlowLoader extends URLClassLoader {
      *
      */
     public void closeClassLoader() {
-        HashSet<String> closedFiles = new HashSet<String>();
+        HashSet<String> closedFiles = new HashSet<>();
         try {
             Object obj = getFieldObject( URLClassLoader.class, "ucp", this );
             ArrayList<?> loaders = (ArrayList<?>) getFieldObject( obj.getClass(), "loaders", obj );

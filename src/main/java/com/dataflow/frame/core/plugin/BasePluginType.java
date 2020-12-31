@@ -56,11 +56,12 @@ public abstract class BasePluginType implements PluginTypeInterface {
                         }
                     } catch (Exception e) {
                         throw new Exception("Unable to read jar file: " + fileObject.getURL().toString(), e);
-                    } finally {
+                    } /*finally {
+                        // 使用到union组件时候会异常关闭 排查中
                         if (urlClassLoader != null) {
                             urlClassLoader.closeClassLoader();
                         }
-                    }
+                    }*/
                 }
             }
         }
