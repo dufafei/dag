@@ -4,6 +4,9 @@ import java.net.URLClassLoader;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 插件接口
+ */
 public interface PluginInterface {
 
     String getId();

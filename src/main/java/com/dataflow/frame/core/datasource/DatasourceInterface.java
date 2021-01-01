@@ -2,6 +2,9 @@ package com.dataflow.frame.core.datasource;
 
 import java.util.Map;
 
+/**
+ * 数据源接口
+ */
 public interface DatasourceInterface extends Cloneable {
 
     String getName();

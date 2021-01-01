@@ -8,6 +8,10 @@ public class RowMeta implements RowMetaInterface {
 
     private List<ValueMetaInterface> valueMetaList;
 
+    public RowMeta() {
+        valueMetaList = new ArrayList<>();
+    }
+
     @Override
     public List<ValueMetaInterface> getValueMetaList() {
         return valueMetaList;
@@ -26,6 +30,15 @@ public class RowMeta implements RowMetaInterface {
     @Override
     public void addValueMeta(ValueMetaInterface meta) {
         valueMetaList.add(meta);
+    }
+
+    @Override
+    public void removeValueMeta(String name) {
+        for (ValueMetaInterface value: getValueMetaList()) {
+            if (value.getName().equals(name)) {
+                getValueMetaList().remove(value);
+            }
+        }
     }
 
     @Override

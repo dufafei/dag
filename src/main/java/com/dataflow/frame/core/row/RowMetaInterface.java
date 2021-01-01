@@ -12,6 +12,8 @@ public interface RowMetaInterface {
 
     void addValueMeta( ValueMetaInterface meta );
 
+    void removeValueMeta(String name);
+
     void addRowMeta(RowMetaInterface rowMeta);
 
     ValueMetaInterface searchValueMeta(String name);
