@@ -1,6 +1,6 @@
 # Dataflow Frame
 
-Dataflow Frame是基于kettle的设计思想开发而来的一个j基础框架。
+Dataflow Frame是基于kettle的设计思想开发而来的一个基础框架。
 
 core是一个抽象层，可以集成任意能够组件化，流程化的计算引擎或者调度框架。
 
