@@ -24,13 +24,6 @@ spark，flink，azkaban的集成端及web端闭源开发。
 
 spark，azkban主体功能开发完成。
 
-待完善：
-
-1. 获取输入字段和当前步骤字段，方便界面配置，比如配置表输出组件的字段映射...
-2. 血缘支持(需要对spark重新编译)
-
-web端初步完成，界面美化中...
-
 ## 插件列表
 
 1. https://gitee.com/dufafei/dataflow-datasource-plugin.git
