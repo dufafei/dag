@@ -8,14 +8,13 @@ public class RowMeta implements RowMetaInterface {
 
     private List<ValueMetaInterface> valueMetaList;
 
-    public RowMeta() {
-        valueMetaList = new ArrayList<>();
-    }
+    public RowMeta() { valueMetaList = new ArrayList<>(); }
 
     @Override
-    public List<ValueMetaInterface> getValueMetaList() {
-        return valueMetaList;
-    }
+    public List<ValueMetaInterface> getValueMetaList() { return valueMetaList; }
+
+    @Override
+    public int size() { return valueMetaList.size(); }
 
     @Override
     public ValueMetaInterface getValueMeta(int index) {
@@ -23,23 +22,10 @@ public class RowMeta implements RowMetaInterface {
     }
 
     @Override
-    public void setValueMeta(int index, ValueMetaInterface valueMeta) {
-        valueMetaList.set(index, valueMeta);
-    }
+    public void setValueMeta(int index, ValueMetaInterface valueMeta) { valueMetaList.set(index, valueMeta); }
 
     @Override
-    public void addValueMeta(ValueMetaInterface meta) {
-        valueMetaList.add(meta);
-    }
-
-    @Override
-    public void removeValueMeta(String name) {
-        for (ValueMetaInterface value: getValueMetaList()) {
-            if (value.getName().equals(name)) {
-                getValueMetaList().remove(value);
-            }
-        }
-    }
+    public void addValueMeta(ValueMetaInterface meta) { valueMetaList.add(meta); }
 
     @Override
     public void addRowMeta(RowMetaInterface rowMeta) {

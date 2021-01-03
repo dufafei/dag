@@ -6,13 +6,13 @@ public interface RowMetaInterface {
 
     List<ValueMetaInterface> getValueMetaList();
 
+    int size();
+
     ValueMetaInterface getValueMeta(int index);
 
     void setValueMeta(int index, ValueMetaInterface valueMeta);
 
-    void addValueMeta( ValueMetaInterface meta );
-
-    void removeValueMeta(String name);
+    void addValueMeta(ValueMetaInterface meta);
 
     void addRowMeta(RowMetaInterface rowMeta);
 
