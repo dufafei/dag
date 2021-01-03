@@ -10,17 +10,7 @@ public abstract class FlowMeta<T extends VertexMeta, U extends EdgeMeta<T>> {
 
     public void addVertex(T t) { vertexes.add(t); }
 
-    public void addVertex(List<T> vertexes, T t) {
-        int idx = vertexes.indexOf(t);
-        if(idx < 0) vertexes.add(t);
-    }
-
     public void addEdge(U u) { edges.add(u); }
-
-    public void addEdge(List<U> edges, U u) {
-        int idx = edges.indexOf(u);
-        if(idx < 0) edges.add(u);
-    }
 
     public int nrVertex() { return vertexes.size(); }
 
@@ -64,12 +54,17 @@ public abstract class FlowMeta<T extends VertexMeta, U extends EdgeMeta<T>> {
         return null;
     }
 
+    public void addIfAbsentVertex(List<T> vertexes, T t) {
+        int idx = vertexes.indexOf(t);
+        if(idx < 0) vertexes.add(t);
+    }
+
     public List<T> findPreviousVertexes(T vertex, boolean all) {
         List<T> previous = new ArrayList<>();
         for(U edge: edges) {
             if ((edge.isEnabled() | all) && edge.getEndNode().equals(vertex)) {
                 T t = edge.getStartNode();
-                addVertex(previous, t);
+                addIfAbsentVertex(previous, t);
             }
         }
         return previous;
@@ -80,7 +75,7 @@ public abstract class FlowMeta<T extends VertexMeta, U extends EdgeMeta<T>> {
         for(U edge: edges) {
             if ((edge.isEnabled() | all) && edge.getStartNode().equals(vertex)) {
                 T t = edge.getEndNode();
-                addVertex(next, t);
+                addIfAbsentVertex(next, t);
             }
         }
         return next;
@@ -91,7 +86,7 @@ public abstract class FlowMeta<T extends VertexMeta, U extends EdgeMeta<T>> {
         for(U edge: edges) {
             T t = edge.getStartNode();
             if(findPreviousVertexes(t, all).isEmpty()) {
-                addVertex(vertexes, t);
+                addIfAbsentVertex(vertexes, t);
             }
         }
         return vertexes;
@@ -102,7 +97,7 @@ public abstract class FlowMeta<T extends VertexMeta, U extends EdgeMeta<T>> {
         for(U edge: edges) {
             T t = edge.getEndNode();
             if(findNextVertexes(t, all).isEmpty()) {
-                addVertex(vertexes, t);
+                addIfAbsentVertex(vertexes, t);
             }
         }
         return vertexes;
@@ -112,7 +107,7 @@ public abstract class FlowMeta<T extends VertexMeta, U extends EdgeMeta<T>> {
         List<T> all = new ArrayList<>();
         for(T vertex: vertexes) {
             if(!vertex.isEnabled()) {
-                addVertex(all, vertex);
+                addIfAbsentVertex(all, vertex);
             }
         }
         return all;
@@ -122,7 +117,7 @@ public abstract class FlowMeta<T extends VertexMeta, U extends EdgeMeta<T>> {
         List<T> all = new ArrayList<>();
         for(T vertex: vertexes) {
             if(!vertex.isConnected()) {
-                addVertex(all, vertex);
+                addIfAbsentVertex(all, vertex);
             }
         }
         return all;
