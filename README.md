@@ -26,8 +26,6 @@ spark，azkban主体功能开发完成。
 
 ## 插件列表
 
-1. https://gitee.com/dufafei/dataflow-datasource-plugin.git
-
 2. https://gitee.com/dufafei/dataflow-engine-spark-plugin.git
 
 3. https://gitee.com/dufafei/dataflow-engine-azkaban-plugin.git 
