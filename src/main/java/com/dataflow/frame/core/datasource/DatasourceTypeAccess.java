@@ -25,12 +25,12 @@ public enum DatasourceTypeAccess {
         this.code = code;
     }
 
-    public static DatasourceTypeAccess getTypeAccess(String type) {
+    public static DatasourceTypeAccess getTypeAccess(String type) throws Exception {
         for (DatasourceTypeAccess value : DatasourceTypeAccess.values()) {
             if(value.getType().equals(type)) {
                 return value;
             }
         }
-        return null;
+        throw new Exception("type not found");
     }
 }

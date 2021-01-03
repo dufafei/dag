@@ -21,6 +21,9 @@ public interface PluginInterface {
 
     String getClassName();
 
+    // 是否是本地插件
+    boolean isNative();
+
     List<String> getLibraries();
 
     URLClassLoader getUrlClassLoader();

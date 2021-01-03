@@ -142,11 +142,16 @@ public class PluginRegistry {
      */
     @SuppressWarnings("unchecked")
     public <T> T loadClass(PluginInterface plugin) {
+        Class<? extends T> cl;
         try {
-            String className = plugin.getClassName();
-            URLClassLoader ucl = plugin.getUrlClassLoader();
-            Class<? extends T> cl = (Class<? extends T>) ucl.loadClass(className);
-            return cl.newInstance();
+            if(plugin.isNative()) {
+                cl = (Class<? extends T>) Class.forName(plugin.getClassName());
+                return cl.newInstance();
+            } else {
+                URLClassLoader ucl = plugin.getUrlClassLoader();
+                cl = (Class<? extends T>) ucl.loadClass(plugin.getClassName());
+                return cl.newInstance();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

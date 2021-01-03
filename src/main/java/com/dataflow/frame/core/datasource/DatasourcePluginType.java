@@ -1,7 +1,10 @@
 package com.dataflow.frame.core.datasource;
 
+import com.dataflow.frame.core.datasource.impl.*;
 import com.dataflow.frame.core.plugin.BasePluginType;
 import java.lang.annotation.Annotation;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DatasourcePluginType extends BasePluginType {
 
@@ -41,5 +44,19 @@ public class DatasourcePluginType extends BasePluginType {
     @Override
     protected String extractCategory(Annotation annotation) {
         return null;
+    }
+
+    @Override
+    public void registerNatives() throws Exception {
+        List<Class<?>> list = new ArrayList<>();
+        list.add(ClickHouseDatasource.class);
+        list.add(DmDatasource.class);
+        list.add(HiveDatasource.class);
+        list.add(MysqlDatasource.class);
+        list.add(OracleDatasource.class);
+        list.add(PostgreSqlDatasource.class);
+        for (Class<?> clazz: list) {
+            handlePluginAnnotation(clazz, true, null, null);
+        }
     }
 }

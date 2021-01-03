@@ -3,7 +3,6 @@ package com.dataflow.frame.core.datasource;
 import com.dataflow.frame.core.plugin.PluginInterface;
 import com.dataflow.frame.core.plugin.PluginRegistry;
 import org.apache.commons.lang3.StringUtils;
-
 import java.util.Iterator;
 import java.util.Map;
 
@@ -44,7 +43,7 @@ public class DatasourceMeta {
         return registry.loadClass(sp);
     }
 
-    private DatasourceTypeAccess getAccessType(String dbAccess) {
+    private DatasourceTypeAccess getAccessType(String dbAccess) throws Exception {
         return DatasourceTypeAccess.getTypeAccess(dbAccess);
     }
 

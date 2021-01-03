@@ -15,10 +15,10 @@ import java.util.*;
 
 public abstract class BasePluginType implements PluginTypeInterface {
 
-    protected String id;
+    private String id;
     protected String name;
-    protected Class<? extends java.lang.annotation.Annotation> pluginType;
-    protected List<FolderInterface> pluginFolders;
+    private Class<? extends java.lang.annotation.Annotation> pluginType;
+    private List<FolderInterface> pluginFolders;
 
     public BasePluginType(String id, String name, Class<? extends Annotation> pluginType) {
         this.id = id;
@@ -33,6 +33,13 @@ public abstract class BasePluginType implements PluginTypeInterface {
     public List<FolderInterface> getPluginFolders() { return pluginFolders; }
 
     public void searchPlugins() throws Exception {
+        registerNatives(); // 本地加载
+        registerJars(); // 从jar包中加载
+    }
+
+    public void registerNatives() throws Exception {}
+
+    private void registerJars() throws Exception {
         for (FolderInterface pluginFolder: getPluginFolders()) {
             FileObject[] fileObjectList = pluginFolder.findJarFiles(false);
             if(fileObjectList != null) {
@@ -50,8 +57,7 @@ public abstract class BasePluginType implements PluginTypeInterface {
                                 ClassLoader classLoader = getClass().getClassLoader();
                                 urlClassLoader = new DataFlowLoader(urls.toArray(new URL[0]), classLoader);
                                 Class<?> clazz = urlClassLoader.loadClass(imp);
-                                Annotation annotation = clazz.getAnnotation(pluginType);
-                                handlePluginAnnotation(clazz, annotation, libraries, urlClassLoader);
+                                handlePluginAnnotation(clazz, false, libraries, urlClassLoader);
                             }
                         }
                     } catch (Exception e) {
@@ -100,9 +106,10 @@ public abstract class BasePluginType implements PluginTypeInterface {
 
     @Override
     public void handlePluginAnnotation(Class<?> clazz,
-                                       Annotation annotation,
+                                       boolean isNative,
                                        List<String> libraries,
                                        URLClassLoader urlClassLoader) throws Exception {
+        Annotation annotation = clazz.getAnnotation(pluginType);
         String id = extractID(annotation);
         String name = extractName(annotation);
         String desc = extractDesc(annotation);
@@ -113,7 +120,8 @@ public abstract class BasePluginType implements PluginTypeInterface {
         PluginInterface plugin = new Plugin(
                 id, name, desc,
                 icon, category,
-                clazz.getName(), libraries, urlClassLoader,
+                clazz.getName(), isNative,
+                libraries, urlClassLoader,
                 extensionOptions
         );
         PluginRegistry.getInstance().registerPlugin(getClass(), plugin);

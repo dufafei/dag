@@ -12,12 +12,15 @@ public class Plugin implements PluginInterface {
     private String icon;
     private String category;
     private String className;
+    private boolean nativePlugin;
+
     private List<String> libraries;
     private URLClassLoader urlClassLoader;
+
     private Map<String, Object> extensionOptions;
 
     public Plugin(String id, String name, String description,String icon, String category,
-                  String className, List<String> libraries, URLClassLoader urlClassLoader,
+                  String className, boolean nativePlugin, List<String> libraries, URLClassLoader urlClassLoader,
                   Map<String, Object> extensionOptions) {
         this.id = id;
         this.name = name;
@@ -25,8 +28,11 @@ public class Plugin implements PluginInterface {
         this.icon = icon;
         this.category = category;
         this.className = className;
+        this.nativePlugin = nativePlugin;
+
         this.libraries = libraries;
         this.urlClassLoader = urlClassLoader;
+
         this.extensionOptions = extensionOptions;
     }
 
@@ -52,9 +58,10 @@ public class Plugin implements PluginInterface {
     }
 
     @Override
-    public String getClassName() {
-        return className;
-    }
+    public String getClassName() { return className; }
+
+    @Override
+    public boolean isNative() { return nativePlugin; }
 
     @Override
     public List<String> getLibraries() { return libraries; }

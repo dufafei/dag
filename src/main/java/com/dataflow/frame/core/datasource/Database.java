@@ -89,7 +89,6 @@ public class Database {
      * @param rm 要查询的结果集元数据
      * @param ignoreLength true，如果你想忽略长度(解决MySQL bug/问题)
      * @param lazyConversion 如果需要在可能的情况下启用延迟转换，则为true
-     * @return
      */
     private RowMetaInterface getQueryFields(ResultSetMetaData rm,
                                             boolean ignoreLength,

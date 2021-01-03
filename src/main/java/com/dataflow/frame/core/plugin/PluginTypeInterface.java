@@ -18,7 +18,7 @@ public interface PluginTypeInterface {
     void searchPlugins() throws Exception;
 
     void handlePluginAnnotation(Class<?> clazz,
-                                Annotation annotation,
+                                boolean nativePlugin,
                                 List<String> libraries,
                                 URLClassLoader classLoader) throws Exception;
 }
