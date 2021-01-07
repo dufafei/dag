@@ -141,12 +141,12 @@ public abstract class BasePluginType implements PluginTypeInterface {
     }
 
     @Override
-    public PluginInterface getPlugin(String id) throws Exception {
+    public PluginInterface getPlugin(String id) {
         return pluginRegistry.getPlugin(getClass(), id);
     }
 
     @Override
-    public <T> T getPluginInstance(String id) throws Exception {
+    public <T> T getPluginInstance(String id) {
         PluginInterface pluginInterface = getPlugin(id);
         return pluginRegistry.loadClass(pluginInterface);
     }
