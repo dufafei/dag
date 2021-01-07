@@ -21,4 +21,6 @@ public interface PluginTypeInterface {
                                 boolean nativePlugin,
                                 List<String> libraries,
                                 URLClassLoader classLoader) throws Exception;
+
+    List<PluginInterface> getPlugins();
 }

@@ -132,6 +132,11 @@ public abstract class BasePluginType implements PluginTypeInterface {
         PluginRegistry.getInstance().registerPlugin(getClass(), plugin);
     }
 
+    @Override
+    public List<PluginInterface> getPlugins() {
+        return PluginRegistry.getInstance().getPlugins(getClass());
+    }
+
     protected abstract String extractID(java.lang.annotation.Annotation annotation);
 
     protected abstract String extractName(java.lang.annotation.Annotation annotation);
