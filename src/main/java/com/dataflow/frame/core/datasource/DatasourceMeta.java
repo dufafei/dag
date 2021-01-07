@@ -15,8 +15,6 @@ public class DatasourceMeta {
     private String dbAccess;
     private DatasourceInterface datasourceInterface;
 
-    private DatasourceMeta() {}
-
     public DatasourceMeta(String dbType, String dbAccess,
                           String host, String port,
                           String db, String user, String pass) throws Exception {
