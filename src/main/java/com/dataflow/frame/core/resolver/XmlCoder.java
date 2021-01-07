@@ -6,5 +6,5 @@ public interface XmlCoder {
 
     FlowMeta decode(String xml) throws Exception;
 
-    String encode(FlowMeta meta) throws Exception;
+    String encode(FlowMeta flowMeta) throws Exception;
 }

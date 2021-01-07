@@ -47,7 +47,7 @@ public class DatasourcePluginType extends BasePluginType {
     }
 
     @Override
-    public void registerNatives() throws Exception {
+    public List<Class<?>> registerNatives() throws Exception {
         List<Class<?>> list = new ArrayList<>();
         list.add(ClickHouseDatasource.class);
         list.add(DmDatasource.class);
@@ -55,8 +55,6 @@ public class DatasourcePluginType extends BasePluginType {
         list.add(MysqlDatasource.class);
         list.add(OracleDatasource.class);
         list.add(PostgreSqlDatasource.class);
-        for (Class<?> clazz: list) {
-            handlePluginAnnotation(clazz, true, null, null);
-        }
+        return list;
     }
 }

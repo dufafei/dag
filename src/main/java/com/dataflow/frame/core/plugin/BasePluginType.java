@@ -16,7 +16,7 @@ import java.util.*;
 public abstract class BasePluginType implements PluginTypeInterface {
 
     private String id;
-    protected String name;
+    private String name;
     private Class<? extends java.lang.annotation.Annotation> pluginType;
     private List<FolderInterface> pluginFolders;
 
@@ -33,11 +33,16 @@ public abstract class BasePluginType implements PluginTypeInterface {
     public List<FolderInterface> getPluginFolders() { return pluginFolders; }
 
     public void searchPlugins() throws Exception {
-        registerNatives(); // 本地加载
+        List<Class<?>> pluginList = registerNatives(); // 本地加载
+        if(pluginList != null) {
+            for (Class<?> clazz: pluginList) {
+                handlePluginAnnotation(clazz, true, null, null);
+            }
+        }
         registerJars(); // 从jar包中加载
     }
 
-    public void registerNatives() throws Exception {}
+    public List<Class<?>> registerNatives() throws Exception { return null;}
 
     private void registerJars() throws Exception {
         for (FolderInterface pluginFolder: getPluginFolders()) {
@@ -48,7 +53,7 @@ public abstract class BasePluginType implements PluginTypeInterface {
                     List<URL> urls = getFileUrls(fileObjects);
                     List<String> libraries = getFileNames(fileObjects);
                     AnnotationDB annotationDB = new AnnotationDB();
-                    DataFlowLoader urlClassLoader = null;
+                    DataFlowLoader urlClassLoader;
                     try {
                         annotationDB.scanArchives(fileObject.getURL());
                         Set<String> impls = annotationDB.getAnnotationIndex().get(pluginType.getName());

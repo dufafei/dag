@@ -24,11 +24,11 @@ public abstract class MxCoder implements XmlCoder {
     protected abstract FlowMeta decode(mxGraph graph) throws Exception;
 
     @Override
-    public String encode(FlowMeta meta) throws Exception {
+    public String encode(FlowMeta flowMeta) throws Exception {
         mxGraph graph = new mxGraph();
         graph.getModel().beginUpdate();
         try {
-            encode(meta, graph);
+            encode(flowMeta, graph);
         } finally {
             graph.getModel().endUpdate();
         }
@@ -37,5 +37,5 @@ public abstract class MxCoder implements XmlCoder {
         return mxUtils.getPrettyXml(node);
     }
 
-    protected abstract void encode(FlowMeta meta, mxGraph graph) throws Exception;
+    protected abstract void encode(FlowMeta flowMeta, mxGraph graph) throws Exception;
 }
