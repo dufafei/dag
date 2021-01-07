@@ -22,5 +22,9 @@ public interface PluginTypeInterface {
                                 List<String> libraries,
                                 URLClassLoader classLoader) throws Exception;
 
-    List<PluginInterface> getPlugins();
+    List<PluginInterface> getPlugins() throws Exception;
+
+    PluginInterface getPlugin(String id) throws Exception;
+
+    <T> T getPluginInstance(String id) throws Exception;
 }

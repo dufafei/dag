@@ -1,7 +1,5 @@
 package com.dataflow.frame.core.datasource;
 
-import com.dataflow.frame.core.plugin.PluginInterface;
-import com.dataflow.frame.core.plugin.PluginRegistry;
 import org.apache.commons.lang3.StringUtils;
 import java.util.Iterator;
 import java.util.Map;
@@ -16,8 +14,6 @@ public class DatasourceMeta {
     private String dbType;
     private String dbAccess;
     private DatasourceInterface datasourceInterface;
-
-    private DatasourceMeta() {}
 
     public DatasourceMeta(String dbType, String dbAccess,
                           String host, String port,
@@ -35,12 +31,7 @@ public class DatasourceMeta {
     }
 
     private DatasourceInterface getDatabaseInterface(String databaseType) throws Exception {
-        PluginRegistry registry = PluginRegistry.getInstance();
-        PluginInterface sp = registry.getPlugin(DatasourcePluginType.class, databaseType);
-        if(sp == null) {
-            throw new Exception("missing datasource plugin:" + databaseType);
-        }
-        return registry.loadClass(sp);
+        return DatasourcePluginType.getInstance().getPluginInstance(databaseType);
     }
 
     private DatasourceTypeAccess getAccessType(String dbAccess) throws Exception {

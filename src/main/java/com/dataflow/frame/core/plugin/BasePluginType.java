@@ -19,6 +19,7 @@ public abstract class BasePluginType implements PluginTypeInterface {
     private String name;
     private Class<? extends java.lang.annotation.Annotation> pluginType;
     private List<FolderInterface> pluginFolders;
+    private PluginRegistry pluginRegistry = PluginRegistry.getInstance();
 
     public BasePluginType(String id, String name, Class<? extends Annotation> pluginType) {
         this.id = id;
@@ -33,16 +34,18 @@ public abstract class BasePluginType implements PluginTypeInterface {
     public List<FolderInterface> getPluginFolders() { return pluginFolders; }
 
     public void searchPlugins() throws Exception {
-        List<Class<?>> pluginList = registerNatives(); // 本地加载
+        // 本地加载
+        List<Class<?>> pluginList = registerNatives();
         if(pluginList != null) {
             for (Class<?> clazz: pluginList) {
                 handlePluginAnnotation(clazz, true, null, null);
             }
         }
-        registerJars(); // 从jar包中加载
+        // 从jar包中加载
+        registerJars();
     }
 
-    public List<Class<?>> registerNatives() throws Exception { return null;}
+    public List<Class<?>> registerNatives() throws Exception { return null; }
 
     private void registerJars() throws Exception {
         for (FolderInterface pluginFolder: getPluginFolders()) {
@@ -129,12 +132,26 @@ public abstract class BasePluginType implements PluginTypeInterface {
                 libraries, urlClassLoader,
                 extensionOptions
         );
-        PluginRegistry.getInstance().registerPlugin(getClass(), plugin);
+        PluginRegistry.getInstance().registerPlugin(this, plugin);
     }
 
     @Override
-    public List<PluginInterface> getPlugins() {
-        return PluginRegistry.getInstance().getPlugins(getClass());
+    public List<PluginInterface> getPlugins() throws Exception {
+        if(!pluginRegistry.getPluginType().contains(this)) {
+            throw new Exception("插件类型未注册");
+        }
+        return pluginRegistry.getPlugins(this);
+    }
+
+    @Override
+    public PluginInterface getPlugin(String id) throws Exception {
+        return pluginRegistry.getPlugin(this, id);
+    }
+
+    @Override
+    public <T> T getPluginInstance(String id) throws Exception {
+        PluginInterface pluginInterface = getPlugin(id);
+        return pluginRegistry.loadClass(pluginInterface);
     }
 
     protected abstract String extractID(java.lang.annotation.Annotation annotation);
