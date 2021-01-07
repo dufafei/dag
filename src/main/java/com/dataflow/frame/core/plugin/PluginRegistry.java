@@ -11,7 +11,7 @@ public class PluginRegistry {
     // 插件类型
     private static List<PluginTypeInterface> pluginTypes;
     // 插件类型-> 该类型的插件组件
-    private Map<PluginTypeInterface, List<PluginInterface>> pluginMap;
+    private Map<Class<? extends PluginTypeInterface>, List<PluginInterface>> pluginMap;
     private ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
 
     private static final PluginRegistry pluginRegistry = new PluginRegistry();
@@ -27,7 +27,7 @@ public class PluginRegistry {
         pluginTypes.add(type);
     }
 
-    public List<PluginTypeInterface> getPluginType() {
+    public List<PluginTypeInterface> getPluginTypes() {
         lock.readLock().lock();
         try {
             return pluginTypes;
@@ -43,16 +43,20 @@ public class PluginRegistry {
     }
 
     private void registerType(PluginTypeInterface pluginType) throws Exception {
+        registerType(pluginType.getClass());
+        pluginType.searchPlugins();
+    }
+
+    private void registerType(Class<? extends PluginTypeInterface> pluginType) {
         lock.writeLock().lock();
         try {
             pluginMap.computeIfAbsent(pluginType, k -> new ArrayList<>());
-            pluginType.searchPlugins();
         } finally {
             lock.writeLock().unlock();
         }
     }
 
-    public void registerPlugin(PluginTypeInterface pluginType, PluginInterface plugin) throws Exception {
+    public void registerPlugin(Class<? extends PluginTypeInterface> pluginType, PluginInterface plugin) throws Exception {
         lock.writeLock().lock();
         try {
             if(plugin.getId() == null) {
@@ -65,23 +69,13 @@ public class PluginRegistry {
         }
     }
 
-    public void unRegisterPlugin(PluginTypeInterface pluginType, PluginInterface plugin) {
-        lock.writeLock().lock();
-        try {
-            List<PluginInterface> list = pluginMap.get(pluginType);
-            list.remove(plugin);
-        } finally {
-            lock.writeLock().unlock();
-        }
-    }
-
     @SuppressWarnings("unchecked")
-    public <T extends PluginInterface, K extends PluginTypeInterface> List<T> getPlugins(K type) {
+    public <T extends PluginInterface, K extends PluginTypeInterface> List<T> getPlugins(Class<K> type) {
         Set<T> set = new HashSet<>();
         lock.readLock().lock();
         try {
-            for (PluginTypeInterface pi : pluginMap.keySet()) {
-                if (Const.classIsOrExtends(pi.getClass(), type.getClass())) {
+            for (Class<? extends PluginTypeInterface> pi : pluginMap.keySet()) {
+                if (Const.classIsOrExtends(pi, type)) {
                     List<PluginInterface> mapList = pluginMap.get(pi);
                     if (mapList != null) {
                         for (PluginInterface p : mapList) {
@@ -97,7 +91,7 @@ public class PluginRegistry {
         return new ArrayList<>(set);
     }
 
-    public PluginInterface getPlugin(PluginTypeInterface pluginType, String id) {
+    public PluginInterface getPlugin(Class<? extends PluginTypeInterface> pluginType, String id) {
         if (StringUtils.isEmpty(id)) {
             return null;
         }
@@ -109,7 +103,7 @@ public class PluginRegistry {
         return null;
     }
 
-    public String getPluginId(PluginTypeInterface pluginType, Object pluginClass) {
+    public String getPluginId(Class<? extends PluginTypeInterface> pluginType, Object pluginClass) {
         String className = pluginClass.getClass().getName();
         for (PluginInterface plugin : getPlugins(pluginType)) {
             /*for (String check : plugin.getClassMap().values()) {
@@ -124,7 +118,7 @@ public class PluginRegistry {
         return null;
     }
 
-    public PluginInterface getPlugin(PluginTypeInterface pluginType, Object pluginClass ) {
+    public PluginInterface getPlugin( Class<? extends PluginTypeInterface> pluginType, Object pluginClass ) {
         String pluginId = getPluginId( pluginType, pluginClass );
         if ( pluginId == null ) {
             return null;
@@ -138,14 +132,14 @@ public class PluginRegistry {
      */
     @SuppressWarnings("unchecked")
     public <T> T loadClass(PluginInterface plugin) {
-        Class<? extends T> cl;
         try {
             if(plugin.isNative()) {
-                cl = (Class<? extends T>) Class.forName(plugin.getClassName());
-                return cl.newInstance();
+                Class<? extends T> cl = (Class<? extends T>) Class.forName(plugin.getClassName());
+                return (T) Class.forName(plugin.getClassName());
             } else {
+                String className = plugin.getClassName();
                 URLClassLoader ucl = plugin.getUrlClassLoader();
-                cl = (Class<? extends T>) ucl.loadClass(plugin.getClassName());
+                Class<? extends T> cl = (Class<? extends T>) ucl.loadClass(className);
                 return cl.newInstance();
             }
         } catch (Exception e) {
