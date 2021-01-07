@@ -15,6 +15,8 @@ public class DatasourceMeta {
     private String dbAccess;
     private DatasourceInterface datasourceInterface;
 
+    private DatasourceMeta() {}
+
     public DatasourceMeta(String dbType, String dbAccess,
                           String host, String port,
                           String db, String user, String pass) throws Exception {
@@ -31,7 +33,7 @@ public class DatasourceMeta {
     }
 
     private DatasourceInterface getDatabaseInterface(String databaseType) throws Exception {
-        return DatasourcePluginType.getInstance().getPluginInstance(databaseType);
+        return (DatasourceInterface) DatasourcePluginType.getInstance().getPluginInstance(databaseType);
     }
 
     private DatasourceTypeAccess getAccessType(String dbAccess) throws Exception {

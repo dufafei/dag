@@ -118,13 +118,13 @@ public class PluginRegistry {
         return null;
     }
 
-    public PluginInterface getPlugin( Class<? extends PluginTypeInterface> pluginType, Object pluginClass ) {
+    /*public PluginInterface getPlugin( Class<? extends PluginTypeInterface> pluginType, Object pluginClass ) {
         String pluginId = getPluginId( pluginType, pluginClass );
         if ( pluginId == null ) {
             return null;
         }
         return getPlugin(pluginType, pluginId);
-    }
+    }*/
 
     /**
      * classpath 下使用Class.forName
@@ -132,14 +132,15 @@ public class PluginRegistry {
      */
     @SuppressWarnings("unchecked")
     public <T> T loadClass(PluginInterface plugin) {
+        Class<? extends T> cl;
         try {
             if(plugin.isNative()) {
-                Class<? extends T> cl = (Class<? extends T>) Class.forName(plugin.getClassName());
-                return (T) Class.forName(plugin.getClassName());
+                cl = (Class<? extends T>) Class.forName(plugin.getClassName());
+                return cl.newInstance();
             } else {
                 String className = plugin.getClassName();
                 URLClassLoader ucl = plugin.getUrlClassLoader();
-                Class<? extends T> cl = (Class<? extends T>) ucl.loadClass(className);
+                cl = (Class<? extends T>) ucl.loadClass(className);
                 return cl.newInstance();
             }
         } catch (Exception e) {

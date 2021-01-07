@@ -136,16 +136,13 @@ public abstract class BasePluginType implements PluginTypeInterface {
     }
 
     @Override
-    public List<PluginInterface> getPlugins() throws Exception {
-        if(!pluginRegistry.getPluginTypes().contains(this)) {
-            throw new Exception("插件类型未注册");
-        }
-        return pluginRegistry.getPlugins(this.getClass());
+    public List<PluginInterface> getPlugins() {
+        return pluginRegistry.getPlugins(getClass());
     }
 
     @Override
     public PluginInterface getPlugin(String id) throws Exception {
-        return pluginRegistry.getPlugin(this.getClass(), id);
+        return pluginRegistry.getPlugin(getClass(), id);
     }
 
     @Override
