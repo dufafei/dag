@@ -19,7 +19,7 @@ public interface Variable {
     /**
      * 从另一个变量空间共享一个变量空间。这意味着该对象应该接管所使用的空间，例如参数
      */
-    void shareVariablesWith( Variable space );
+    void shareVariablesWith(Variable space);
 
     /**
      * 获取变量空间的父元素。

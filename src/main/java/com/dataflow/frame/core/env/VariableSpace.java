@@ -9,10 +9,13 @@ public class VariableSpace implements Variable {
 
     // 存储变量
     private Map<String, String> properties;
+
     // 父变量
     private Variable parent;
+
     // 注入的变量
     private Map<String, String> injection;
+
     // 是否注入
     private boolean initialized;
 
