@@ -45,6 +45,7 @@ public abstract class BasePluginType implements PluginTypeInterface {
         registerJars();
     }
 
+    // 添加插件在classpath下的组件
     public List<Class<?>> registerNatives() throws Exception { return null; }
 
     private void registerJars() throws Exception {
