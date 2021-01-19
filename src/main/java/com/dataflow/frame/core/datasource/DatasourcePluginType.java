@@ -11,7 +11,7 @@ public class DatasourcePluginType extends BasePluginType<DatasourceInterface> {
     private static DatasourcePluginType datasourcePluginType;
 
     private DatasourcePluginType() {
-        super("datasource", "datasource", Datasource.class);
+        super("datasource", "数据源插件", Datasource.class);
     }
 
     public static DatasourcePluginType getInstance() {
