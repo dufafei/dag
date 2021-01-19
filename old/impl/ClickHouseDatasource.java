@@ -1,8 +1,8 @@
 package com.dataflow.frame.core.datasource.impl;
 
-import com.dataflow.frame.core.datasource.BaseDatasource;
+import com.dataflow.frame.core.datasource.DatabaseDatasource;
 import com.dataflow.frame.core.datasource.Datasource;
-import com.dataflow.frame.core.datasource.DatasourceTypeAccess;
+import com.dataflow.frame.core.datasource.DatabaseTypeAccess;
 import org.apache.commons.lang3.StringUtils;
 
 /*
@@ -13,16 +13,16 @@ import org.apache.commons.lang3.StringUtils;
         type = "ClickHouse",
         typeDescription = "ClickHouse数据源"
 )
-public class ClickHouseDatasource extends BaseDatasource {
+public class ClickHouseDatasource extends DatabaseDatasource {
 
     @Override
-    public DatasourceTypeAccess[] getAccessTypeList() {
-        return new DatasourceTypeAccess[]{DatasourceTypeAccess.TYPE_ACCESS_JDBC};
+    public DatabaseTypeAccess[] getAccessTypeList() {
+        return new DatabaseTypeAccess[]{DatabaseTypeAccess.TYPE_ACCESS_JDBC};
     }
 
     @Override
     public Integer getDefaultDatabasePort() {
-        if (getAccessType() == DatasourceTypeAccess.TYPE_ACCESS_JDBC) {
+        if (getAccessType() == DatabaseTypeAccess.TYPE_ACCESS_JDBC) {
             return 9000;
         }
         return null;
@@ -38,7 +38,7 @@ public class ClickHouseDatasource extends BaseDatasource {
      */
     @Override
     public String getDriverClass() {
-        if(getAccessType() == DatasourceTypeAccess.TYPE_ACCESS_JDBC) {
+        if(getAccessType() == DatabaseTypeAccess.TYPE_ACCESS_JDBC) {
             return "com.github.housepower.jdbc.ClickHouseDriver";
         }
         return null;
@@ -46,7 +46,7 @@ public class ClickHouseDatasource extends BaseDatasource {
 
     @Override
     public String getURL() {
-        if(getAccessType() == DatasourceTypeAccess.TYPE_ACCESS_JDBC) {
+        if(getAccessType() == DatabaseTypeAccess.TYPE_ACCESS_JDBC) {
             if (StringUtils.isEmpty(getPort())) {
                 return "jdbc:clickhouse://" + getHost() + "/" + getDb();
             } else {

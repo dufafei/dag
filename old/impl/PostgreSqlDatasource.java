@@ -1,23 +1,23 @@
 package com.dataflow.frame.core.datasource.impl;
 
-import com.dataflow.frame.core.datasource.BaseDatasource;
+import com.dataflow.frame.core.datasource.DatabaseDatasource;
 import com.dataflow.frame.core.datasource.Datasource;
-import com.dataflow.frame.core.datasource.DatasourceTypeAccess;
+import com.dataflow.frame.core.datasource.DatabaseTypeAccess;
 
 @Datasource(
         type = "PostgreSql",
         typeDescription = "PostgreSql数据源"
 )
-public class PostgreSqlDatasource extends BaseDatasource {
+public class PostgreSqlDatasource extends DatabaseDatasource {
 
     @Override
-    public DatasourceTypeAccess[] getAccessTypeList() {
-        return new DatasourceTypeAccess[]{DatasourceTypeAccess.TYPE_ACCESS_JDBC};
+    public DatabaseTypeAccess[] getAccessTypeList() {
+        return new DatabaseTypeAccess[]{DatabaseTypeAccess.TYPE_ACCESS_JDBC};
     }
 
     @Override
     public Integer getDefaultDatabasePort() {
-        if (getAccessType() == DatasourceTypeAccess.TYPE_ACCESS_JDBC) {
+        if (getAccessType() == DatabaseTypeAccess.TYPE_ACCESS_JDBC) {
             return 5432;
         }
         return null;
@@ -25,7 +25,7 @@ public class PostgreSqlDatasource extends BaseDatasource {
 
     @Override
     public String getDriverClass() {
-        if (getAccessType() == DatasourceTypeAccess.TYPE_ACCESS_ODBC) {
+        if (getAccessType() == DatabaseTypeAccess.TYPE_ACCESS_ODBC) {
             return "sun.jdbc.odbc.JdbcOdbcDriver";
         } else {
             return "org.postgresql.Driver";
@@ -34,7 +34,7 @@ public class PostgreSqlDatasource extends BaseDatasource {
 
     @Override
     public String getURL() {
-        if (getAccessType() == DatasourceTypeAccess.TYPE_ACCESS_ODBC) {
+        if (getAccessType() == DatabaseTypeAccess.TYPE_ACCESS_ODBC) {
             return "jdbc:odbc:" + getDb();
         } else {
             return "jdbc:postgresql://" + getHost() + ":" + port + "/" + getDb();

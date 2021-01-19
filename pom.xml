@@ -49,6 +49,11 @@
             <artifactId>jsch</artifactId>
             <version>0.1.55</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.jsqlparser</groupId>
+            <artifactId>jsqlparser</artifactId>
+            <version>3.0</version>
+        </dependency>
     </dependencies>
 
     <build>

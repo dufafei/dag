@@ -10,15 +10,19 @@ public class PluginRegistry {
 
     // 插件类型
     private static List<PluginTypeInterface> pluginTypes;
+
     // 插件类型-> 该类型的插件组件
     private Map<Class<? extends PluginTypeInterface>, List<PluginInterface>> pluginMap;
+
     private ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
 
     private static final PluginRegistry pluginRegistry = new PluginRegistry();
+
     private PluginRegistry() {
         pluginTypes =  new ArrayList<>();
         pluginMap = new HashMap<>();
     }
+
     public static PluginRegistry getInstance() {
         return pluginRegistry;
     }
@@ -60,7 +64,7 @@ public class PluginRegistry {
         lock.writeLock().lock();
         try {
             if(plugin.getId() == null) {
-                throw new Exception("Not a valid id specified in plugin :" + plugin);
+                throw new IllegalArgumentException("Not a valid id specified in plugin :" + plugin);
             }
             List<PluginInterface> list = pluginMap.get(pluginType);
             list.add(plugin);
@@ -74,7 +78,7 @@ public class PluginRegistry {
         Set<T> set = new HashSet<>();
         lock.readLock().lock();
         try {
-            for (Class<? extends PluginTypeInterface> pi : pluginMap.keySet()) {
+            for (Class<? extends PluginTypeInterface> pi: pluginMap.keySet()) {
                 if (Const.classIsOrExtends(pi, type)) {
                     List<PluginInterface> mapList = pluginMap.get(pi);
                     if (mapList != null) {
@@ -95,6 +99,7 @@ public class PluginRegistry {
         if (StringUtils.isEmpty(id)) {
             return null;
         }
+        id = id.toLowerCase();
         for (PluginInterface plugin : getPlugins(pluginType)) {
             if (plugin.getId().equals(id)) {
                 return plugin;
@@ -118,7 +123,7 @@ public class PluginRegistry {
         return null;
     }
 
-    /*public PluginInterface getPlugin( Class<? extends PluginTypeInterface> pluginType, Object pluginClass ) {
+    /*public PluginInterface getPlugin(Class<? extends PluginTypeInterface> pluginType, Object pluginClass ) {
         String pluginId = getPluginId( pluginType, pluginClass );
         if ( pluginId == null ) {
             return null;

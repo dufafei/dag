@@ -13,7 +13,7 @@ import java.net.URLClassLoader;
 import java.net.URLDecoder;
 import java.util.*;
 
-public abstract class BasePluginType implements PluginTypeInterface {
+public abstract class BasePluginType<T> implements PluginTypeInterface {
 
     private String id;
     private String name;
@@ -34,18 +34,15 @@ public abstract class BasePluginType implements PluginTypeInterface {
     public List<FolderInterface> getPluginFolders() { return pluginFolders; }
 
     public void searchPlugins() throws Exception {
-        // 本地加载
         List<Class<?>> pluginList = registerNatives();
         if(pluginList != null) {
             for (Class<?> clazz: pluginList) {
                 handlePluginAnnotation(clazz, true, null, null);
             }
         }
-        // 从jar包中加载
         registerJars();
     }
 
-    // 添加插件在classpath下的组件
     public List<Class<?>> registerNatives() throws Exception { return null; }
 
     private void registerJars() throws Exception {
@@ -119,7 +116,7 @@ public abstract class BasePluginType implements PluginTypeInterface {
                                        List<String> libraries,
                                        URLClassLoader urlClassLoader) throws Exception {
         Annotation annotation = clazz.getAnnotation(pluginType);
-        String id = extractID(annotation);
+        String id = extractID(annotation).toLowerCase();
         String name = extractName(annotation);
         String desc = extractDesc(annotation);
         String icon = extractIcon(annotation);
@@ -142,12 +139,11 @@ public abstract class BasePluginType implements PluginTypeInterface {
     }
 
     @Override
-    public PluginInterface getPlugin(String id) {
-        return pluginRegistry.getPlugin(getClass(), id);
-    }
+    public PluginInterface getPlugin(String id) { return pluginRegistry.getPlugin(getClass(), id); }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public <T> T getPluginInstance(String id) {
+    public T getPluginInstance(String id) {
         PluginInterface pluginInterface = getPlugin(id);
         return pluginRegistry.loadClass(pluginInterface);
     }

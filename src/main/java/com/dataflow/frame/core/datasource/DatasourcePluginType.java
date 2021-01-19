@@ -6,7 +6,7 @@ import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DatasourcePluginType extends BasePluginType {
+public class DatasourcePluginType extends BasePluginType<DatasourceInterface> {
 
     private static DatasourcePluginType datasourcePluginType;
 
@@ -23,17 +23,15 @@ public class DatasourcePluginType extends BasePluginType {
 
     @Override
     protected String extractID(Annotation annotation) {
-        return ((Datasource) annotation).type();
+        return ((Datasource) annotation).id();
     }
 
     @Override
-    protected String extractName(Annotation annotation) {
-        return null;
-    }
+    protected String extractName(Annotation annotation) { return null; }
 
     @Override
     protected String extractDesc(Annotation annotation) {
-        return ((Datasource) annotation).typeDescription();
+        return ((Datasource) annotation).description();
     }
 
     @Override
@@ -42,19 +40,17 @@ public class DatasourcePluginType extends BasePluginType {
     }
 
     @Override
-    protected String extractCategory(Annotation annotation) {
-        return null;
-    }
+    protected String extractCategory(Annotation annotation) { return ((Datasource) annotation).category(); }
 
     @Override
     public List<Class<?>> registerNatives() throws Exception {
         List<Class<?>> list = new ArrayList<>();
-        list.add(ClickHouseDatasource.class);
-        list.add(DmDatasource.class);
-        list.add(HiveDatasource.class);
         list.add(MysqlDatasource.class);
-        list.add(OracleDatasource.class);
-        list.add(PostgreSqlDatasource.class);
+        // list.add(ClickHouseDatasource.class);
+        // list.add(DmDatasource.class);
+        // list.add(HiveDatasource.class);
+        // list.add(OracleDatasource.class);
+        // list.add(PostgreSqlDatasource.class);
         return list;
     }
 }

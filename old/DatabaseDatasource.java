@@ -2,7 +2,7 @@ package com.dataflow.frame.core.datasource;
 
 import java.util.*;
 
-public abstract class BaseDatasource implements DatasourceInterface {
+public abstract class DatabaseDatasource implements DatasourceInterface {
 
     // The prefix for all the extra options attributes
     public static final String ATTRIBUTE_PREFIX_EXTRA_OPTION = "EXTRA_OPTION_";
@@ -10,18 +10,22 @@ public abstract class BaseDatasource implements DatasourceInterface {
     public static final String ATTRIBUTE_IS_CLUSTERED = "IS_CLUSTERED";
 
     protected String name;
-    protected DatasourceTypeAccess accessType;
+    protected DatabaseTypeAccess accessType;
     protected String host;
     protected String port;
     protected String db;
     protected String user;
     protected String pass;
-    protected String servername; // Informix only!
-    protected String dataTablespace; // data storage location, For Oracle & perhaps others
-    protected String indexTablespace; // index storage location, For Oracle & perhaps others
-    protected Properties attributes; // 连接参数
+    // Informix only!
+    protected String servername;
+    // 数据表空间, For Oracle & perhaps others
+    protected String dataTablespace;
+    // 索引表空间, For Oracle & perhaps others
+    protected String indexTablespace;
+    // 连接参数
+    protected Properties attributes;
 
-    public BaseDatasource(){
+    public DatabaseDatasource(){
         attributes = new Properties();
         if (getAccessTypeList() != null && getAccessTypeList().length > 0) {
             // 默认值
@@ -33,10 +37,10 @@ public abstract class BaseDatasource implements DatasourceInterface {
     public String getName() { return name; }
 
     @Override
-    public DatasourceTypeAccess getAccessType() { return accessType; }
+    public DatabaseTypeAccess getAccessType() { return accessType; }
 
     @Override
-    public void setAccessType(DatasourceTypeAccess accessType) { this.accessType = accessType; }
+    public void setAccessType(DatabaseTypeAccess accessType) { this.accessType = accessType; }
 
     @Override
     public String getHost() { return host; }

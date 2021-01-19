@@ -1,24 +1,24 @@
 package com.dataflow.frame.core.datasource.impl;
 
-import com.dataflow.frame.core.datasource.BaseDatasource;
+import com.dataflow.frame.core.datasource.DatabaseDatasource;
 import com.dataflow.frame.core.datasource.Datasource;
-import com.dataflow.frame.core.datasource.DatasourceTypeAccess;
+import com.dataflow.frame.core.datasource.DatabaseTypeAccess;
 import org.apache.commons.lang3.StringUtils;
 
 @Datasource(
         type = "Oracle",
         typeDescription = "Oracle数据源"
 )
-public class OracleDatasource extends BaseDatasource {
+public class OracleDatasource extends DatabaseDatasource {
 
     @Override
-    public DatasourceTypeAccess[] getAccessTypeList() {
-        return new DatasourceTypeAccess[]{DatasourceTypeAccess.TYPE_ACCESS_JDBC};
+    public DatabaseTypeAccess[] getAccessTypeList() {
+        return new DatabaseTypeAccess[]{DatabaseTypeAccess.TYPE_ACCESS_JDBC};
     }
 
     @Override
     public Integer getDefaultDatabasePort() {
-        if (getAccessType() == DatasourceTypeAccess.TYPE_ACCESS_JDBC) {
+        if (getAccessType() == DatabaseTypeAccess.TYPE_ACCESS_JDBC) {
             return 1521;
         }
         return null;
@@ -26,7 +26,7 @@ public class OracleDatasource extends BaseDatasource {
 
     @Override
     public String getDriverClass() {
-        if (getAccessType() == DatasourceTypeAccess.TYPE_ACCESS_JDBC) {
+        if (getAccessType() == DatabaseTypeAccess.TYPE_ACCESS_JDBC) {
             return "oracle.jdbc.driver.OracleDriver";
         }
         return null;
@@ -34,7 +34,7 @@ public class OracleDatasource extends BaseDatasource {
 
     @Override
     public String getURL() {
-        if (getAccessType() == DatasourceTypeAccess.TYPE_ACCESS_JDBC) {
+        if (getAccessType() == DatabaseTypeAccess.TYPE_ACCESS_JDBC) {
             // the database name can be a SID (starting with :) or a Service (starting with /)
             // <host>:<port>/<service>
             // <host>:<port>:<SID>

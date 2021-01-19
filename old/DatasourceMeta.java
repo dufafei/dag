@@ -1,0 +1,142 @@
+package com.dataflow.frame.core.datasource;
+
+import org.apache.commons.lang3.StringUtils;
+import java.util.Iterator;
+import java.util.Map;
+
+public class DatasourceMeta {
+
+    /**
+     * The value to store in the attributes so that an empty value doesn't get lost...
+     */
+    public static final String EMPTY_OPTIONS_STRING = "><EMPTY><";
+
+    private String dbType;
+    private String dbAccess;
+    private DatasourceInterface datasourceInterface;
+
+    public DatasourceMeta(String dbType, String dbAccess,
+                          String host, String port,
+                          String db, String user, String pass) throws Exception {
+        this.dbType = dbType;
+        this.datasourceInterface = getDatabaseInterface(dbType);
+        this.datasourceInterface.addDefaultOptions();
+        this.dbAccess = dbAccess;
+        this.datasourceInterface.setAccessType(getAccessType(dbAccess));
+        this.datasourceInterface.setHost(host);
+        this.datasourceInterface.setPort(port);
+        this.datasourceInterface.setDb(db);
+        this.datasourceInterface.setUser(user);
+        this.datasourceInterface.setPass(pass);
+    }
+
+    private DatasourceInterface getDatabaseInterface(String databaseType) throws Exception {
+        return (DatasourceInterface) DatasourcePluginType.getInstance().getPluginInstance(databaseType);
+    }
+
+    private DatabaseTypeAccess getAccessType(String dbAccess) throws Exception {
+        return DatabaseTypeAccess.getTypeAccess(dbAccess);
+    }
+
+    public String getDbType() { return dbType; }
+
+    public String getDbAccess() { return dbAccess; }
+
+    public DatasourceInterface getDatasourceInterface() { return datasourceInterface; }
+
+    public DatabaseTypeAccess getAccessType() { return datasourceInterface.getAccessType(); }
+
+    public String getHost() { return datasourceInterface.getHost(); }
+
+    public String getPort() { return datasourceInterface.getPort(); }
+
+    public String getDb() { return datasourceInterface.getDb(); }
+
+    public String getUsername() { return datasourceInterface.getUser(); }
+
+    public String getPassword() { return datasourceInterface.getPass(); }
+
+    public String getDriverClass() { return datasourceInterface.getDriverClass(); }
+
+    public String getURL() throws Exception {
+        return getURL(null);
+    }
+
+    public String getURL(String partitionId) throws Exception {
+        String url;
+        if (isPartitioned() && !StringUtils.isEmpty(partitionId)) {
+            return null;
+        } else {
+            url = datasourceInterface.getURL();
+        }
+        if (datasourceInterface.supportsOptionsInURL()) {
+            url = appendExtraOptions(url, getExtraOptions());
+        }
+        return url;
+    }
+
+    private String appendExtraOptions(String url, Map<String, String> extraOptions) {
+        if (extraOptions.isEmpty()) {
+            return url;
+        }
+        StringBuilder urlBuilder = new StringBuilder(url);
+        final String optionIndicator = getExtraOptionIndicator();
+        final String optionSeparator = getExtraOptionSeparator();
+        final String valueSeparator = getExtraOptionValueSeparator();
+        Iterator<String> iterator = extraOptions.keySet().iterator();
+        boolean first = true;
+        while (iterator.hasNext()) {
+            String parameter = iterator.next();
+            final String value = extraOptions.get(parameter);
+            if (StringUtils.isEmpty(value) || value.equals(EMPTY_OPTIONS_STRING)) {
+                // skip this science no value is provided
+                continue;
+            }
+            if (first && !url.contains(valueSeparator)) {
+                urlBuilder.append(optionIndicator);
+            } else {
+                urlBuilder.append(optionSeparator);
+            }
+            urlBuilder.append(parameter).append(valueSeparator).append(value);
+            first = false;
+        }
+        return urlBuilder.toString();
+    }
+
+    /**
+     * @return true if the connection contains partitioning information
+     */
+    public boolean isPartitioned() { return datasourceInterface.isPartitioned(); }
+
+    public String getExtraOptionIndicator() { return datasourceInterface.getExtraOptionIndicator(); }
+
+    public String getExtraOptionValueSeparator() { return datasourceInterface.getExtraOptionValueSeparator(); }
+
+    public String getExtraOptionSeparator() { return datasourceInterface.getExtraOptionSeparator(); }
+
+    public Map<String, String> getExtraOptions() { return datasourceInterface.getExtraOptions(); }
+
+    public String stripCR(String sql) {
+        if (sql == null) {
+            return null;
+        }
+        return stripCR(new StringBuilder(sql));
+    }
+
+    private boolean supportsNewLinesInSQL() {
+        return datasourceInterface.supportsNewLinesInSQL();
+    }
+
+    public String stripCR(StringBuilder sql) {
+        // DB2 Can't handle \n in SQL Statements...
+        if (!supportsNewLinesInSQL()) {
+            // Remove CR's
+            for (int i = sql.length() - 1; i >= 0; i--) {
+                if (sql.charAt(i) == '\n' || sql.charAt(i) == '\r') {
+                    sql.setCharAt(i, ' ');
+                }
+            }
+        }
+        return sql.toString();
+    }
+}

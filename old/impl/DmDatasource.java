@@ -1,8 +1,8 @@
 package com.dataflow.frame.core.datasource.impl;
 
-import com.dataflow.frame.core.datasource.BaseDatasource;
+import com.dataflow.frame.core.datasource.DatabaseDatasource;
 import com.dataflow.frame.core.datasource.Datasource;
-import com.dataflow.frame.core.datasource.DatasourceTypeAccess;
+import com.dataflow.frame.core.datasource.DatabaseTypeAccess;
 import org.apache.commons.lang3.StringUtils;
 
 /*
@@ -12,16 +12,16 @@ import org.apache.commons.lang3.StringUtils;
         type = "Dm",
         typeDescription = "达梦数据源"
 )
-public class DmDatasource extends BaseDatasource {
+public class DmDatasource extends DatabaseDatasource {
 
     @Override
-    public DatasourceTypeAccess[] getAccessTypeList() {
-        return new DatasourceTypeAccess[]{DatasourceTypeAccess.TYPE_ACCESS_JDBC};
+    public DatabaseTypeAccess[] getAccessTypeList() {
+        return new DatabaseTypeAccess[]{DatabaseTypeAccess.TYPE_ACCESS_JDBC};
     }
 
     @Override
     public Integer getDefaultDatabasePort() {
-        if (getAccessType() == DatasourceTypeAccess.TYPE_ACCESS_JDBC) {
+        if (getAccessType() == DatabaseTypeAccess.TYPE_ACCESS_JDBC) {
             return 5236;
         }
         return null;
@@ -29,7 +29,7 @@ public class DmDatasource extends BaseDatasource {
 
     @Override
     public String getDriverClass() {
-        if(getAccessType() == DatasourceTypeAccess.TYPE_ACCESS_JDBC) {
+        if(getAccessType() == DatabaseTypeAccess.TYPE_ACCESS_JDBC) {
             return "dm.jdbc.driver.DmDriver";
         }
         return null;
@@ -37,7 +37,7 @@ public class DmDatasource extends BaseDatasource {
 
     @Override
     public String getURL() {
-        if(getAccessType() == DatasourceTypeAccess.TYPE_ACCESS_JDBC) {
+        if(getAccessType() == DatabaseTypeAccess.TYPE_ACCESS_JDBC) {
             if (StringUtils.isEmpty(getPort())) {
                 return "jdbc:dm://" + getHost() + "/" + getDb();
             } else {

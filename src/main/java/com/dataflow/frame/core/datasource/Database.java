@@ -9,30 +9,27 @@ import java.sql.*;
 
 public class Database {
 
-    private DatasourceMeta datasourceMeta;
+    private DatabaseMeta databaseMeta;
     private Connection connection;
 
-    public Database(DatasourceMeta datasourceMeta) {
-        this.datasourceMeta = datasourceMeta;
-    }
+    public Database(DatabaseMeta databaseMeta) { this.databaseMeta = databaseMeta; }
 
     public void connect() throws Exception {
         connect(null);
     }
 
     public void connect(String partitionId) throws Exception {
-        //
-        if(datasourceMeta.getAccessType() == DatasourceTypeAccess.TYPE_ACCESS_JDBC) {
+        if(databaseMeta.getAccess() == DatabaseAccess.TYPE_ACCESS_JDBC) {
             /*PluginInterface plugin =
                     PluginRegistry.getInstance().getPlugin(DatasourcePluginType.class, datasourceMeta.getDatasourceInterface());
             URLClassLoader urlClassLoader = plugin.getUrlClassLoader();
             Class<?> driverClass = urlClassLoader.loadClass(datasourceMeta.getDriverClass());*/
-            Class<?> driverClass = Class.forName(datasourceMeta.getDriverClass());
+            Class.forName(databaseMeta.getDriverClass());
             String url;
-            if (datasourceMeta.isPartitioned() && !StringUtils.isEmpty(partitionId)) {
-                url = datasourceMeta.getURL(partitionId);
+            if (databaseMeta.isPartitioned() && !StringUtils.isEmpty(partitionId)) {
+                url = databaseMeta.getUrl(partitionId);
             } else {
-                url = datasourceMeta.getURL();
+                url = databaseMeta.getUrl();
             }
 
             String clusterUsername = null;
@@ -52,8 +49,8 @@ public class Database {
                 username = clusterUsername;
                 password = clusterPassword;
             } else {
-                username = datasourceMeta.getUsername();
-                password = datasourceMeta.getPassword();
+                username = databaseMeta.getUsername();
+                password = databaseMeta.getPassword();
             }
             connection = DriverManager.getConnection(url, username, password);
         }
@@ -73,7 +70,7 @@ public class Database {
     }
 
     public RowMetaInterface getQueryFieldsFromPreparedStatement(String sql) throws Exception {
-        String newSql = datasourceMeta.stripCR(sql);
+        String newSql = databaseMeta.stripCR(sql);
         try (PreparedStatement preparedStatement = connection.prepareStatement(
                 newSql,
                 ResultSet.TYPE_FORWARD_ONLY,
