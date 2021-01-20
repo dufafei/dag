@@ -1,8 +1,8 @@
 package com.dataflow.frame.core.env;
 
-import com.google.common.util.concurrent.SettableFuture;
 import com.dataflow.frame.core.plugin.PluginRegistry;
 import com.dataflow.frame.core.plugin.PluginTypeInterface;
+import com.google.common.util.concurrent.SettableFuture;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
@@ -29,5 +29,4 @@ public class Environment {
             ready.set(true);
         }
     }
-
 }
