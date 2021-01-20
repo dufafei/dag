@@ -40,7 +40,7 @@ public class PluginRegistry {
         }
     }
 
-    public static synchronized void init() throws Exception {
+    public static synchronized void load() throws Exception {
         for (final PluginTypeInterface pluginType : pluginTypes) {
             getInstance().registerType(pluginType);
         }
@@ -48,7 +48,7 @@ public class PluginRegistry {
 
     public static synchronized void reload() throws Exception {
         pluginMap.clear();
-        init();
+        load();
     }
 
     private void registerType(PluginTypeInterface pluginType) throws Exception {
