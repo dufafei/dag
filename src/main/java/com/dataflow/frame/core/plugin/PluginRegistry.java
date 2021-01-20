@@ -12,7 +12,7 @@ public class PluginRegistry {
     private static List<PluginTypeInterface> pluginTypes;
 
     // 插件类型-> 该类型的插件组件
-    private Map<Class<? extends PluginTypeInterface>, List<PluginInterface>> pluginMap;
+    private static Map<Class<? extends PluginTypeInterface>, List<PluginInterface>> pluginMap;
 
     private ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
 
@@ -44,6 +44,11 @@ public class PluginRegistry {
         for (final PluginTypeInterface pluginType : pluginTypes) {
             getInstance().registerType(pluginType);
         }
+    }
+
+    public static synchronized void reload() throws Exception {
+        pluginMap.clear();
+        init();
     }
 
     private void registerType(PluginTypeInterface pluginType) throws Exception {
