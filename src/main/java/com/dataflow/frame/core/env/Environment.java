@@ -25,7 +25,7 @@ public class Environment {
             for (PluginTypeInterface pluginType: pluginTypes) {
                 PluginRegistry.addPluginType(pluginType);
             }
-            PluginRegistry.init();
+            PluginRegistry.load();
             ready.set(true);
         }
     }
