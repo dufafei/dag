@@ -1,6 +1,5 @@
 ### IntelliJ IDEA ###
 .idea/
-doc/
 target/
 *.iml
 *.ipr
