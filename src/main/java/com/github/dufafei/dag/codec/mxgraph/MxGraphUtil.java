@@ -1,4 +1,4 @@
-package com.basics.frame.dag.codec.mxgraph;
+package com.github.dufafei.dag.codec.mxgraph;
 
 import com.mxgraph.canvas.mxGraphicsCanvas2D;
 import com.mxgraph.reader.mxSaxOutputHandler;

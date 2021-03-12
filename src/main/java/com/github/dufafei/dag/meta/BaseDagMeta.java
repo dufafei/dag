@@ -1,4 +1,4 @@
-package com.basics.frame.dag.meta;
+package com.github.dufafei.dag.meta;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.basics.frame.dag.meta;
+package com.github.dufafei.dag.meta;
 
 public abstract class BaseHopMeta<T extends BaseNodeMeta> {
 

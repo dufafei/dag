@@ -1,6 +1,6 @@
-package com.basics.frame.dag.codec.mxgraph;
+package com.github.dufafei.dag.codec.mxgraph;
 
-import com.basics.frame.dag.meta.BaseDagMeta;
+import com.github.dufafei.dag.meta.BaseDagMeta;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.util.mxDomUtils;
 

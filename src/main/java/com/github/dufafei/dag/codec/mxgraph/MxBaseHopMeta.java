@@ -1,7 +1,7 @@
-package com.basics.frame.dag.codec.mxgraph;
+package com.github.dufafei.dag.codec.mxgraph;
 
-import com.basics.frame.dag.meta.BaseHopMeta;
-import com.basics.frame.dag.utils.JavaUtils;
+import com.github.dufafei.dag.meta.BaseHopMeta;
+import com.github.dufafei.dag.utils.JavaUtils;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.util.mxDomUtils;
 import com.mxgraph.view.mxGraph;

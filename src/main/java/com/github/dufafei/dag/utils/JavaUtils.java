@@ -1,4 +1,4 @@
-package com.basics.frame.dag.utils;
+package com.github.dufafei.dag.utils;
 
 public class JavaUtils {
 
