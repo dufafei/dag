@@ -28,7 +28,6 @@ public class MxTransform extends AbstractMxTransform {
                 mxCell cell = node.encode(graph, parent);
                 cells.put(node, cell);
             }
-
             for (MxBaseHopMeta hop: mxBaseDagMeta.getHops()) {
                 mxCell source = cells.get(hop.getSource());
                 mxCell target = cells.get(hop.getTarget());
@@ -59,7 +58,6 @@ public class MxTransform extends AbstractMxTransform {
                 mxBaseDagMeta.addNode(node);
             }
         }
-
         for (Object o: objects) {
             mxCell cell = (mxCell) o;
             if (cell.isEdge()) {

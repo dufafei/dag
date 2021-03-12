@@ -5,10 +5,7 @@ import java.util.List;
 
 public abstract class BaseDagMeta<T extends BaseNodeMeta, U extends BaseHopMeta<T>> {
 
-    // 点集合
     private List<T> nodes = new ArrayList<>();
-
-    // 边集合
     private List<U> hops = new ArrayList<>();
 
     public BaseDagMeta() {}

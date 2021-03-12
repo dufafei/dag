@@ -2,15 +2,10 @@ package com.github.dufafei.dag.meta;
 
 public abstract class BaseNodeMeta {
 
-    // 节点标识
     private String id;
-    // 节点名称
     private String name;
-    // 节点编号
     private Integer serialNumber;
-    // 节点是否禁用
     private Boolean enabled;
-    // 节点是否连线
     private Boolean connected;
 
     public BaseNodeMeta() {}
