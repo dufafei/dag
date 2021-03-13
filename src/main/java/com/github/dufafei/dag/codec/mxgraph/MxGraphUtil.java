@@ -16,14 +16,6 @@ public class MxGraphUtil {
 
     private MxGraphUtil() {}
 
-    /**
-     * 导出图片文件
-     * @param imageXML graph对应的xml代码
-     * @param path 存储路径
-     * @param name 图片名字
-     * @param w 图片宽
-     * @param h 图片高
-     */
     public static void exportImage(String imageXML, String path, String name, int w, int h) throws Exception {
         if(!path.endsWith("/")){
             path = path + "/";

@@ -12,9 +12,6 @@ import org.w3c.dom.Node;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * 基于前端 mx_graph 框架的编解码
- */
 public class MxTransform extends AbstractMxTransform {
 
     public String encode(MxBaseDagMeta mxBaseDagMeta) throws Exception {
